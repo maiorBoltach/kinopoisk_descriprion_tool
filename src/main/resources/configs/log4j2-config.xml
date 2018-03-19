@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="Console">
+            <PatternLayout>
+                <Pattern>%d %p %c{2} [%t] %l %m%n</Pattern>
+            </PatternLayout>
+        </Console>
+        <File name="Summary" fileName="target/logs/OverallResult.log" append="false">
+            <PatternLayout>
+                <Pattern>%d %p %c{2} [%t] %l %m%n</Pattern>
+            </PatternLayout>
+        </File>
+        <File name="IDonly" fileName="target/logs/ID.log" append="false">
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="Summary" level="trace" additivity="false">
+            <AppenderRef ref="Summary"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="IDonly" level="trace" additivity="false">
+            <AppenderRef ref="IDonly"/>
+        </Logger>
+
+        <Root level="trace">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
