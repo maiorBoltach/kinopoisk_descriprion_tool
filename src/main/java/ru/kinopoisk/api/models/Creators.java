@@ -8,7 +8,7 @@ public class Creators {
     private String nameEn;
     private String posterUrl;
     private String professionText;
-    private creatorType professionKey;
+    private String professionKey;
     private String description;
 
     public Creators() {
@@ -19,18 +19,6 @@ public class Creators {
         this.professionText = null;
         this.professionKey = null;
         this.description = null;
-    }
-
-
-    public Creators(int id, String nameRu, String nameEn, String posterUrl, String professionText,
-                    creatorType professionKey, String description) {
-        this.id = id;
-        this.nameRu = nameRu;
-        this.nameEn = nameEn;
-        this.posterUrl = posterUrl;
-        this.professionText = professionText;
-        this.professionKey = professionKey;
-        this.description = description;
     }
 
     public Integer getId() {
@@ -73,12 +61,27 @@ public class Creators {
         this.professionText = professionText;
     }
 
-    public creatorType getProfessionKey() {
+    public String getProfessionKey() {
         return professionKey;
     }
 
-    public void setProfessionKey(creatorType professionKey) {
-        this.professionKey = professionKey;
+    public void setProfessionKey(String professionKey) {
+        switch (professionKey) {
+            case "director":
+                this.professionKey = "DIRECTOR";
+                break;
+            case "actor":
+                this.professionKey = "ACTOR";
+                break;
+            case "producer":
+                this.professionKey = "PRODUCER";
+                break;
+            case "producer_ussr":
+                this.professionKey = "PRODUCER";
+                break;
+            default:
+                this.professionKey = null;
+        }
     }
 
     public String getDescription() {
@@ -121,7 +124,5 @@ public class Creators {
                 ", description='" + description + '\'' +
                 '}';
     }
-
-    public enum creatorType {ACTOR, DIRECTOR, PRODUCER}
 
 }

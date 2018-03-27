@@ -2,35 +2,9 @@ package ru.kinopoisk.api.models;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 public class Film {
-    public enum MPAAType {G, PG, PG_13, NC_17, R, NAN}
-
-    public enum AgeType {AGE_ANY, AGE_0_PLUS, AGE_6_PLUS, AGE_12_PLUS, AGE_16_PLUS, AGE_18_PLUS}
-
-    public enum FilmType {ANY, MOVIE, SERIAL, CARTOON}
-
-    public enum City {MINSK, MOSCOW, MOGILEV}
-
-    public enum Genre {
-        COMEDY("комедия"),
-        ACTION("боевик"),
-        DETECTIVE("детектив"),
-        ANIME("аниме"),
-        HORROR("ужасы");
-
-        private String genre;
-
-        Genre(String genre) {
-            this.genre = genre;
-        }
-
-        public String getGenreAsString() {
-            return genre;
-        }
-    }
-
+    private ArrayList<Creators> filmCreators;
     private Integer filmID;
     private String filmURL;
     private String filmNameEn;
@@ -41,21 +15,15 @@ public class Film {
     private String filmPremiereDVD;
     private String filmPremiereBluRay;
     private boolean hasAwards;
-    private FilmType filmType;
-    private ArrayList<String> filmGenres;
-    private ArrayList<String> filmCountries;
-    private ArrayList<Creators> filmCreators;
+    private String filmType;
+    private String filmGenres;
+    private String filmCountries;
     private String year;
     private Double kinopoiskRating;
     private Double imdbRating;
     private Integer worldwideCriticsPercentRating;
-    private Integer numberPositiveReviews;
-    private MPAAType mpaaRating;
-    private AgeType ageRating;
     private Long budget;
     private Long boxOffice;
-    private boolean isDVDAvailable;
-    private boolean isBluRayAvailable;
     private boolean is3DAvailable;
 
     public Film() {
@@ -76,38 +44,10 @@ public class Film {
         kinopoiskRating = null;
         imdbRating = null;
         worldwideCriticsPercentRating = null;
-        numberPositiveReviews = null;
-        mpaaRating = null;
-        ageRating = null;
         budget = null;
         boxOffice = null;
-        isDVDAvailable = false;
-        isBluRayAvailable = false;
         is3DAvailable = false;
         filmCreators = null;
-    }
-
-    public Film(String filmNameRu, FilmType filmType, ArrayList<String> filmGenres, ArrayList<String> filmCountries, String year,
-                Double kinopoiskRating, Double imdbRating, Integer worldwideCriticsPercentRating, Integer numberPositiveReviews,
-                MPAAType mpaaRating, AgeType ageRating, Long budget, Long boxOffice, boolean isDVDAvailable, boolean isBluRayAvailable,
-                boolean is3DAvailable) {
-        this();
-        this.filmNameRu = filmNameRu;
-        this.filmType = filmType;
-        this.filmGenres = filmGenres;
-        this.filmCountries = filmCountries;
-        this.year = year;
-        this.kinopoiskRating = kinopoiskRating;
-        this.imdbRating = imdbRating;
-        this.worldwideCriticsPercentRating = worldwideCriticsPercentRating;
-        this.numberPositiveReviews = numberPositiveReviews;
-        this.mpaaRating = mpaaRating;
-        this.ageRating = ageRating;
-        this.budget = budget;
-        this.boxOffice = boxOffice;
-        this.isDVDAvailable = isDVDAvailable;
-        this.isBluRayAvailable = isBluRayAvailable;
-        this.is3DAvailable = is3DAvailable;
     }
 
     public Integer getFilmID() {
@@ -198,43 +138,34 @@ public class Film {
         this.hasAwards = hasAwards;
     }
 
-    public FilmType getFilmType() {
+    public String getFilmType() {
         return filmType;
     }
 
-    public void setFilmType(FilmType filmType) {
-        this.filmType = filmType;
+    public void setFilmType(String filmType) {
+        switch (filmType) {
+            case "KPFilm":
+                this.filmType = "MOVIE";
+            case "KPSerial":
+                this.filmType = "SERIAL";
+            default:
+                this.filmType = "MOVIE";
+        }
     }
 
-    public ArrayList<String> getFilmGenres() {
+    public String getFilmGenres() {
         return filmGenres;
     }
 
-    public String getFilmGenresInString() {
-        String result = null;
-        if(filmGenres != null) {
-            result = String.join(", ", filmGenres);
-        }
-        return result;
-    }
-
-    public void setFilmGenres(ArrayList<String> filmGenres) {
+    public void setFilmGenres(String filmGenres) {
         this.filmGenres = filmGenres;
     }
 
-    public ArrayList<String> getFilmCountries() {
+    public String getFilmCountries() {
         return filmCountries;
     }
 
-    public String getFilmCountriesInString() {
-        String result = null;
-        if(filmCountries != null) {
-            result = String.join(", ", filmCountries);
-        }
-        return result;
-    }
-
-    public void setFilmCountries(ArrayList<String> filmCountries) {
+    public void setFilmCountries(String filmCountries) {
         this.filmCountries = filmCountries;
     }
 
@@ -270,30 +201,6 @@ public class Film {
         this.worldwideCriticsPercentRating = worldwideCriticsPercentRating;
     }
 
-    public Integer getNumberPositiveReviews() {
-        return numberPositiveReviews;
-    }
-
-    public void setNumberPositiveReviews(Integer numberPositiveReviews) {
-        this.numberPositiveReviews = numberPositiveReviews;
-    }
-
-    public MPAAType getMpaaRating() {
-        return mpaaRating;
-    }
-
-    public void setMpaaRating(MPAAType mpaaRating) {
-        this.mpaaRating = mpaaRating;
-    }
-
-    public AgeType getAgeRating() {
-        return ageRating;
-    }
-
-    public void setAgeRating(AgeType ageRating) {
-        this.ageRating = ageRating;
-    }
-
     public Long getBudget() {
         return budget;
     }
@@ -306,29 +213,8 @@ public class Film {
         return boxOffice;
     }
 
-    public String getFilmName() {
-        if (filmNameRu != null) return filmNameRu;
-        else return filmNameEn;
-    }
-
     public void setBoxOffice(Long boxOffice) {
         this.boxOffice = boxOffice;
-    }
-
-    public boolean isDVDAvailable() {
-        return isDVDAvailable;
-    }
-
-    public void setDVDAvailable(boolean DVDAvailable) {
-        isDVDAvailable = DVDAvailable;
-    }
-
-    public boolean isBluRayAvailable() {
-        return isBluRayAvailable;
-    }
-
-    public void setBluRayAvailable(boolean bluRayAvailable) {
-        isBluRayAvailable = bluRayAvailable;
     }
 
     public Boolean is3DAvailable() {
@@ -345,8 +231,6 @@ public class Film {
         if (o == null || getClass() != o.getClass()) return false;
         Film film = (Film) o;
         return isHasAwards() == film.isHasAwards() &&
-                isDVDAvailable() == film.isDVDAvailable() &&
-                isBluRayAvailable() == film.isBluRayAvailable() &&
                 is3DAvailable() == film.is3DAvailable() &&
                 Objects.equals(getFilmID(), film.getFilmID()) &&
                 Objects.equals(getFilmURL(), film.getFilmURL()) &&
@@ -357,16 +241,13 @@ public class Film {
                 Objects.equals(getFilmSlogan(), film.getFilmSlogan()) &&
                 Objects.equals(getFilmPremiereDVD(), film.getFilmPremiereDVD()) &&
                 Objects.equals(getFilmPremiereBluRay(), film.getFilmPremiereBluRay()) &&
-                getFilmType() == film.getFilmType() &&
+                Objects.equals(getFilmType(), film.getFilmType()) &&
                 Objects.equals(getFilmGenres(), film.getFilmGenres()) &&
                 Objects.equals(getFilmCountries(), film.getFilmCountries()) &&
                 Objects.equals(getYear(), film.getYear()) &&
                 Objects.equals(getKinopoiskRating(), film.getKinopoiskRating()) &&
                 Objects.equals(getImdbRating(), film.getImdbRating()) &&
                 Objects.equals(getWorldwideCriticsPercentRating(), film.getWorldwideCriticsPercentRating()) &&
-                Objects.equals(getNumberPositiveReviews(), film.getNumberPositiveReviews()) &&
-                getMpaaRating() == film.getMpaaRating() &&
-                getAgeRating() == film.getAgeRating() &&
                 Objects.equals(getBudget(), film.getBudget()) &&
                 Objects.equals(getBoxOffice(), film.getBoxOffice());
     }
@@ -376,8 +257,7 @@ public class Film {
         return Objects.hash(getFilmID(), getFilmURL(), getFilmNameEn(), getFilmNameRu(), getFilmLentgh(), getFilmDescription(),
                 getFilmSlogan(), getFilmPremiereDVD(), getFilmPremiereBluRay(), isHasAwards(), getFilmType(), getFilmGenres(),
                 getFilmCountries(), getYear(), getKinopoiskRating(), getImdbRating(), getWorldwideCriticsPercentRating(),
-                getNumberPositiveReviews(), getMpaaRating(), getAgeRating(), getBudget(), getBoxOffice(), isDVDAvailable(),
-                isBluRayAvailable(), is3DAvailable());
+                getBudget(), getBoxOffice(), is3DAvailable());
     }
 
     @Override
@@ -400,56 +280,9 @@ public class Film {
                 ", kinopoiskRating=" + kinopoiskRating +
                 ", imdbRating=" + imdbRating +
                 ", worldwideCriticsPercentRating=" + worldwideCriticsPercentRating +
-                ", numberPositiveReviews=" + numberPositiveReviews +
-                ", mpaaRating=" + mpaaRating +
-                ", ageRating=" + ageRating +
                 ", budget=" + budget +
                 ", boxOffice=" + boxOffice +
-                ", isDVDAvailable=" + isDVDAvailable +
-                ", isBluRayAvailable=" + isBluRayAvailable +
                 ", is3DAvailable=" + is3DAvailable +
                 '}';
     }
-
-    public boolean isFilmNameRuContains(String filmNameRu) {
-        return Pattern.compile(Pattern.quote(filmNameRu), Pattern.CASE_INSENSITIVE).matcher(filmNameRu).find();
-    }
-
-    public boolean hasGenre(String genre) {
-        return filmGenres.contains(genre);
-    }
-
-    public boolean hasCountry(String country) {
-        return filmCountries.contains(country);
-    }
-
-    public boolean isBudgetInBoundaries(long minInMillionsDollars, long maxInMillionsDollars) {
-        return budget >= minInMillionsDollars * 1000_000 && budget <= maxInMillionsDollars * 1000_000;
-    }
-
-    public boolean isPositiveReviewPercentInBoundaries(int min, int max) {
-        return numberPositiveReviews >= min && numberPositiveReviews <= max;
-    }
-
-    public boolean isCriticsRateInBoundaries(int minRate, int maxRate) {
-        return worldwideCriticsPercentRating >= minRate && worldwideCriticsPercentRating <= maxRate;
-    }
-
-    public boolean isIMDbRateInBoundaries(double minRate, double maxRate) {
-        return imdbRating >= minRate && imdbRating <= maxRate;
-    }
-
-    public boolean isYearInBoundaries(int minYear, int maxYear) {
-        Integer filmYear = Integer.parseInt(year);
-        return filmYear >= minYear && filmYear <= maxYear;
-    }
-
-    public boolean isKinopoiskRatingInBoundaries(double minRate, double maxRate) {
-        return getKinopoiskRating() >= minRate && getKinopoiskRating() <= maxRate;
-    }
-
-    public boolean isBoxofficeInBoundaries(int min, int max) {
-        return getBoxOffice() >= (min * 1_000_000) && getBoxOffice() <= (max * 1_000_000);
-    }
-
 }

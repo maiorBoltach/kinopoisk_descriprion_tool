@@ -67,10 +67,10 @@ public class DbHandler {
             statement.setObject(9, film.getFilmPremiereBluRay());
             statement.setObject(10, film.getFilmPremiereDVD());
             statement.setObject(11, film.getFilmSlogan());
-            statement.setObject(12, film.getFilmCountriesInString());
+            statement.setObject(12, film.getFilmCountries());
             statement.setObject(13, film.getFilmDescription());
             statement.setObject(14, film.getFilmLentgh());
-            statement.setObject(15, film.getFilmGenresInString());
+            statement.setObject(15, film.getFilmGenres());
             statement.setObject(16, film.is3DAvailable() ? 1 : 0);
             statement.setObject(17, film.getYear());
             statement.setObject(18, film.getBudget());

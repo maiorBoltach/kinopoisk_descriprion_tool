@@ -8,9 +8,6 @@ import ru.kinopoisk.api.models.Film;
 
 import java.util.ArrayList;
 
-import static ru.kinopoisk.api.models.Film.FilmType.MOVIE;
-import static ru.kinopoisk.api.models.Film.FilmType.SERIAL;
-
 public class JSONParser {
     private JSONObject JSONData;
     private int actualID;
@@ -168,43 +165,19 @@ public class JSONParser {
         return getCurrentBoolean("hasAwards", data);
     }
 
-    private Film.FilmType setUpFilmTypeCurrentFilm() {
+    private String setUpFilmTypeCurrentFilm() {
         JSONObject data = getCurrentJSONObject("data", JSONData);
-        switch (getCurrentString("type", data)) {
-            case "KPFilm":
-                return MOVIE;
-            case "KPSerial":
-                return SERIAL;
-            default:
-                return MOVIE;
-        }
+        return getCurrentString("type", data);
     }
 
-    private ArrayList<String> setUpFilmGenresCurrentFilm() {
+    private String setUpFilmGenresCurrentFilm() {
         JSONObject data = getCurrentJSONObject("data", JSONData);
-        ArrayList<String> formattedGenres = null;
-
-        if (getCurrentString("genre", data) != null) {
-            formattedGenres = new ArrayList<>();
-            String[] genres = getCurrentString("genre", data).split(",");
-            for (String genre : genres) {
-                formattedGenres.add(genre.trim());
-            }
-        }
-        return formattedGenres;
+        return getCurrentString("genre", data);
     }
 
-    private ArrayList<String> setUpFilmCountriesCurrentFilm() {
+    private String setUpFilmCountriesCurrentFilm() {
         JSONObject data = getCurrentJSONObject("data", JSONData);
-        ArrayList<String> formattedCountries = null;
-        if (getCurrentString("country", data) != null) {
-            formattedCountries = new ArrayList<String>();
-            String[] countries = getCurrentString("country", data).split(",");
-            for (String country : countries) {
-                formattedCountries.add(country.trim());
-            }
-        }
-        return formattedCountries;
+        return getCurrentString("country", data);
     }
 
     private Double setUpKinopoiskRatingCurrentFilm() {
@@ -251,22 +224,7 @@ public class JSONParser {
             currentCreator.setPosterUrl(getCurrentString("posterURL", creator));
             currentCreator.setProfessionText(getCurrentString("professionText", creator));
             currentCreator.setDescription(getCurrentString("description", creator));
-            switch (getCurrentString("professionKey", creator)) {
-                case "director":
-                    currentCreator.setProfessionKey(Creators.creatorType.DIRECTOR);
-                    break;
-                case "actor":
-                    currentCreator.setProfessionKey(Creators.creatorType.ACTOR);
-                    break;
-                case "producer":
-                    currentCreator.setProfessionKey(Creators.creatorType.PRODUCER);
-                    break;
-                case "producer_ussr":
-                    currentCreator.setProfessionKey(Creators.creatorType.PRODUCER);
-                    break;
-                default:
-                    currentCreator.setProfessionKey(null);
-            }
+            currentCreator.setProfessionKey(getCurrentString("professionKey", creator));
             formattedCreators.add(currentCreator);
         }
         return formattedCreators;
