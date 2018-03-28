@@ -1,7 +1,7 @@
 package ru.kinopoisk.api;
 
 
-import org.json.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
 import ru.kinopoisk.api.models.Film;
 
 import java.io.*;
@@ -12,7 +12,7 @@ public class Runner {
     private static final String PATH = "src/main/resources/IDTemp.ini";
 
     public static void main(String[] args) throws Exception {
-        IDreader();
+        execute(444);
     }
 
     private static void IDreader() throws Exception {
@@ -38,10 +38,11 @@ public class Runner {
 
     private static void execute(int ID) {
         APIRequester api = new APIRequester();
-        JSONObject getFilmInfo = api.getFilmInfo(ID);
+        JsonNode getFilmInfo = api.getFilmInfo(ID);
         System.out.println(getFilmInfo);
-        JSONParser newParser = new JSONParser();
+        JsonParser newParser = new JsonParser();
         Film current = newParser.getCurrentFilm(getFilmInfo);
+        System.out.println(current);
         DbHandler dbHandler = null;
         try {
             dbHandler = DbHandler.getInstance();

@@ -1,11 +1,12 @@
 package ru.kinopoisk.api;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
-import org.json.JSONObject;
 import ru.kinopoisk.api.enums.KinopoiskOperations;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class APIRequester {
         return new String(Hex.encodeHex(DigestUtils.md5(full)));
     }
 
-    private JSONObject getRequest(String requestStr) {
+    private JsonNode getRequest(String requestStr) {
         String result = "";
         Date currentTime = new Date();
         String currentTimeInFormat = new SimpleDateFormat("HH:mm MM.dd.yyyy", Locale.getDefault()).format(currentTime);
@@ -58,23 +59,26 @@ public class APIRequester {
         } catch (IOException e) {
             LoggerClass.getInstanceSummaryLogger().error(e.getMessage());
         }
-
-        if (newConnector.getStatusCode() == 200) return new JSONObject(result);
-        else {
-            return null;
+        if (newConnector.getStatusCode() == 200) {
+            try {
+                return new ObjectMapper().readTree(result);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        return null;
     }
 
-    public JSONObject getFilmInfo(int filmID) {
+    public JsonNode getFilmInfo(int filmID) {
         String parameterFilmID = "?filmID=";
         String fullAPIString = KinopoiskOperations.FILM_DETAILS.toString() + parameterFilmID + String.valueOf(filmID);
-        JSONObject jsonObject = getRequest(fullAPIString);
-        checkJSONobject(jsonObject, filmID);
+        JsonNode jsonObject = getRequest(fullAPIString);
+        checkJsonObject(jsonObject, filmID);
         return jsonObject;
     }
 
 
-    private void checkJSONobject(JSONObject jsonObject, int id) {
+    private void checkJsonObject(JsonNode jsonObject, int id) {
         if (jsonObject == null) {
             LoggerClass.getInstanceSummaryLogger().info("fileId=" + id);
         }

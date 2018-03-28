@@ -1,53 +1,82 @@
 package ru.kinopoisk.api.models;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Film {
-    private ArrayList<Creators> filmCreators;
     private Integer filmID;
-    private String filmURL;
-    private String filmNameEn;
-    private String filmNameRu;
-    private String filmLentgh;
-    private String filmDescription;
-    private String filmSlogan;
-    private String filmPremiereDVD;
-    private String filmPremiereBluRay;
-    private boolean hasAwards;
-    private String filmType;
-    private String filmGenres;
-    private String filmCountries;
+    private String webURL;
+    private String nameEN;
+    private String nameRU;
+    private String filmLength;
+    private String description;
+    private String slogan;
     private String year;
-    private Double kinopoiskRating;
-    private Double imdbRating;
-    private Integer worldwideCriticsPercentRating;
-    private Long budget;
-    private Long boxOffice;
-    private boolean is3DAvailable;
+    private String type;
+    private String genre;
+    private String country;
+    private boolean hasAwards;
+    private boolean is3D;
+    private List<Creator> creators;
+    private RatingData ratingData;
+    private RentData rentData;
+    private BudgetData budgetData;
 
     public Film() {
-        filmID = null;
-        filmURL = null;
-        filmNameEn = null;
-        filmNameRu = null;
-        filmLentgh = null;
-        filmDescription = null;
-        filmSlogan = null;
-        filmPremiereDVD = null;
-        filmPremiereBluRay = null;
-        hasAwards = false;
-        filmType = null;
-        filmGenres = null;
-        filmCountries = null;
-        year = null;
-        kinopoiskRating = null;
-        imdbRating = null;
-        worldwideCriticsPercentRating = null;
-        budget = null;
-        boxOffice = null;
-        is3DAvailable = false;
-        filmCreators = null;
+        this.creators = null;
+        this.budgetData = null;
+        this.rentData = null;
+        this.ratingData = null;
+        this.filmID = null;
+        this.webURL = null;
+        this.nameEN = null;
+        this.nameRU = null;
+        this.filmLength = null;
+        this.description = null;
+        this.slogan = null;
+        this.year = null;
+        this.type = null;
+        this.genre = null;
+        this.country = null;
+        this.hasAwards = false;
+        this.is3D = false;
+    }
+
+    public List<Creator> getCreators() {
+        return creators;
+    }
+
+    public void setCreators(Creator[][] creators) {
+        this.creators = Arrays.stream(creators)
+                .flatMap(Arrays::stream)
+                .collect(Collectors.toList());
+    }
+
+    public RatingData getRatingData() {
+        return ratingData;
+    }
+
+    public void setRatingData(RatingData ratingData) {
+        this.ratingData = ratingData;
+    }
+
+    public RentData getRentData() {
+        return rentData;
+    }
+
+    public void setRentData(RentData rentData) {
+        this.rentData = rentData;
+    }
+
+    public BudgetData getBudgetData() {
+        return budgetData;
+    }
+
+    public void setBudgetData(BudgetData budgetData) {
+        this.budgetData = budgetData;
     }
 
     public Integer getFilmID() {
@@ -58,115 +87,52 @@ public class Film {
         this.filmID = filmID;
     }
 
-    public String getFilmURL() {
-        return filmURL;
+    public String getWebURL() {
+        return webURL;
     }
 
-    public void setFilmURL(String filmURL) {
-        this.filmURL = filmURL;
+    public void setWebURL(String webURL) {
+        this.webURL = webURL;
     }
 
-    public String getFilmNameEn() {
-        return filmNameEn;
+    public String getNameEN() {
+        return nameEN;
     }
 
-    public void setFilmNameEn(String filmNameEn) {
-        this.filmNameEn = filmNameEn;
+    public void setNameEN(String nameEN) {
+        this.nameEN = nameEN;
     }
 
-    public String getFilmNameRu() {
-        return filmNameRu;
+    public String getNameRU() {
+        return nameRU;
     }
 
-    public void setFilmNameRu(String filmNameRu) {
-        this.filmNameRu = filmNameRu;
+    public void setNameRU(String nameRU) {
+        this.nameRU = nameRU;
     }
 
-    public String getFilmLentgh() {
-        return filmLentgh;
+    public String getFilmLength() {
+        return filmLength;
     }
 
-    public void setFilmLentgh(String filmLentgh) {
-        this.filmLentgh = filmLentgh;
+    public void setFilmLength(String filmLength) {
+        this.filmLength = filmLength;
     }
 
-    public String getFilmDescription() {
-        return filmDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setFilmDescription(String filmDescription) {
-        this.filmDescription = filmDescription;
+    public void setDescription(String description) {
+        this.description = description.replaceAll("\n\r", " ");
     }
 
-    public String getFilmSlogan() {
-        return filmSlogan;
+    public String getSlogan() {
+        return slogan;
     }
 
-    public ArrayList<Creators> getFilmCreators() {
-        return filmCreators;
-    }
-
-    public void setFilmCreators(ArrayList<Creators> filmCreators) {
-        this.filmCreators = filmCreators;
-    }
-
-    public void setFilmSlogan(String filmSlogan) {
-        this.filmSlogan = filmSlogan;
-    }
-
-    public String getFilmPremiereDVD() {
-        return filmPremiereDVD;
-    }
-
-    public void setFilmPremiereDVD(String filmPremiereDVD) {
-        this.filmPremiereDVD = filmPremiereDVD;
-    }
-
-    public String getFilmPremiereBluRay() {
-        return filmPremiereBluRay;
-    }
-
-    public void setFilmPremiereBluRay(String filmPremiereBluRay) {
-        this.filmPremiereBluRay = filmPremiereBluRay;
-    }
-
-    public boolean isHasAwards() {
-        return hasAwards;
-    }
-
-    public void setHasAwards(boolean hasAwards) {
-        this.hasAwards = hasAwards;
-    }
-
-    public String getFilmType() {
-        return filmType;
-    }
-
-    public void setFilmType(String filmType) {
-        switch (filmType) {
-            case "KPFilm":
-                this.filmType = "MOVIE";
-            case "KPSerial":
-                this.filmType = "SERIAL";
-            default:
-                this.filmType = "MOVIE";
-        }
-    }
-
-    public String getFilmGenres() {
-        return filmGenres;
-    }
-
-    public void setFilmGenres(String filmGenres) {
-        this.filmGenres = filmGenres;
-    }
-
-    public String getFilmCountries() {
-        return filmCountries;
-    }
-
-    public void setFilmCountries(String filmCountries) {
-        this.filmCountries = filmCountries;
+    public void setSlogan(String slogan) {
+        this.slogan = slogan;
     }
 
     public String getYear() {
@@ -177,112 +143,73 @@ public class Film {
         this.year = year;
     }
 
-    public Double getKinopoiskRating() {
-        return kinopoiskRating;
+    public String getType() {
+        return type;
     }
 
-    public void setKinopoiskRating(Double kinopoiskRating) {
-        this.kinopoiskRating = kinopoiskRating;
+    public void setType(String type) {
+        switch (type) {
+            case "KPFilm":
+                this.type = "MOVIE";
+            case "KPSerial":
+                this.type = "SERIAL";
+            default:
+                this.type = "MOVIE";
+        }
     }
 
-    public Double getImdbRating() {
-        return imdbRating;
+    public String getGenre() {
+        return genre;
     }
 
-    public void setImdbRating(Double imdbRating) {
-        this.imdbRating = imdbRating;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
-    public Integer getWorldwideCriticsPercentRating() {
-        return worldwideCriticsPercentRating;
+    public String getCountry() {
+        return country;
     }
 
-    public void setWorldwideCriticsPercentRating(Integer worldwideCriticsPercentRating) {
-        this.worldwideCriticsPercentRating = worldwideCriticsPercentRating;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public Long getBudget() {
-        return budget;
+    public boolean isHasAwards() {
+        return hasAwards;
     }
 
-    public void setBudget(Long budget) {
-        this.budget = budget;
+    public void setHasAwards(boolean hasAwards) {
+        this.hasAwards = hasAwards;
     }
 
-    public Long getBoxOffice() {
-        return boxOffice;
+    public boolean isIs3D() {
+        return is3D;
     }
 
-    public void setBoxOffice(Long boxOffice) {
-        this.boxOffice = boxOffice;
-    }
-
-    public Boolean is3DAvailable() {
-        return is3DAvailable;
-    }
-
-    public void setIs3DAvailable(boolean is3DAvailable) {
-        this.is3DAvailable = is3DAvailable;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Film film = (Film) o;
-        return isHasAwards() == film.isHasAwards() &&
-                is3DAvailable() == film.is3DAvailable() &&
-                Objects.equals(getFilmID(), film.getFilmID()) &&
-                Objects.equals(getFilmURL(), film.getFilmURL()) &&
-                Objects.equals(getFilmNameEn(), film.getFilmNameEn()) &&
-                Objects.equals(getFilmNameRu(), film.getFilmNameRu()) &&
-                Objects.equals(getFilmLentgh(), film.getFilmLentgh()) &&
-                Objects.equals(getFilmDescription(), film.getFilmDescription()) &&
-                Objects.equals(getFilmSlogan(), film.getFilmSlogan()) &&
-                Objects.equals(getFilmPremiereDVD(), film.getFilmPremiereDVD()) &&
-                Objects.equals(getFilmPremiereBluRay(), film.getFilmPremiereBluRay()) &&
-                Objects.equals(getFilmType(), film.getFilmType()) &&
-                Objects.equals(getFilmGenres(), film.getFilmGenres()) &&
-                Objects.equals(getFilmCountries(), film.getFilmCountries()) &&
-                Objects.equals(getYear(), film.getYear()) &&
-                Objects.equals(getKinopoiskRating(), film.getKinopoiskRating()) &&
-                Objects.equals(getImdbRating(), film.getImdbRating()) &&
-                Objects.equals(getWorldwideCriticsPercentRating(), film.getWorldwideCriticsPercentRating()) &&
-                Objects.equals(getBudget(), film.getBudget()) &&
-                Objects.equals(getBoxOffice(), film.getBoxOffice());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getFilmID(), getFilmURL(), getFilmNameEn(), getFilmNameRu(), getFilmLentgh(), getFilmDescription(),
-                getFilmSlogan(), getFilmPremiereDVD(), getFilmPremiereBluRay(), isHasAwards(), getFilmType(), getFilmGenres(),
-                getFilmCountries(), getYear(), getKinopoiskRating(), getImdbRating(), getWorldwideCriticsPercentRating(),
-                getBudget(), getBoxOffice(), is3DAvailable());
+    public void setIs3D(boolean is3D) {
+        this.is3D = is3D;
     }
 
     @Override
     public String toString() {
         return "Film{" +
                 "filmID=" + filmID +
-                ", filmURL='" + filmURL + '\'' +
-                ", filmNameEn='" + filmNameEn + '\'' +
-                ", filmNameRu='" + filmNameRu + '\'' +
-                ", filmLentgh='" + filmLentgh + '\'' +
-                ", filmDescription='" + filmDescription + '\'' +
-                ", filmSlogan='" + filmSlogan + '\'' +
-                ", filmPremiereDVD='" + filmPremiereDVD + '\'' +
-                ", filmPremiereBluRay='" + filmPremiereBluRay + '\'' +
+                ", webURL='" + webURL + '\'' +
+                ", nameEN='" + nameEN + '\'' +
+                ", nameRU='" + nameRU + '\'' +
+                ", filmLength='" + filmLength + '\'' +
+                ", description='" + description + '\'' +
+                ", slogan='" + slogan + '\'' +
+                ", year='" + year + '\'' +
+                ", type='" + type + '\'' +
+                ", genre='" + genre + '\'' +
+                ", country='" + country + '\'' +
                 ", hasAwards=" + hasAwards +
-                ", filmType=" + filmType +
-                ", filmGenres=" + filmGenres +
-                ", filmCountries=" + filmCountries +
-                ", year=" + year +
-                ", kinopoiskRating=" + kinopoiskRating +
-                ", imdbRating=" + imdbRating +
-                ", worldwideCriticsPercentRating=" + worldwideCriticsPercentRating +
-                ", budget=" + budget +
-                ", boxOffice=" + boxOffice +
-                ", is3DAvailable=" + is3DAvailable +
+                ", is3D=" + is3D +
+                ", filmCreators=" + creators +
+                ", ratingData=" + ratingData +
+                ", rentData=" + rentData +
+                ", budgetData=" + budgetData +
                 '}';
     }
 }

@@ -1,7 +1,7 @@
 package ru.kinopoisk.api;
 
 import org.sqlite.JDBC;
-import ru.kinopoisk.api.models.Creators;
+import ru.kinopoisk.api.models.Creator;
 import ru.kinopoisk.api.models.Film;
 
 import java.sql.*;
@@ -36,7 +36,7 @@ public class DbHandler {
                 Film currentFilm = new Film();
                 currentFilm.setFilmID(resultSet.getInt("filmID"));
                 lastSuccessfulID=resultSet.getInt("filmID");
-                currentFilm.setFilmNameRu(resultSet.getString("nameRU"));
+                currentFilm.setNameRU(resultSet.getString("nameRU"));
                 currentFilm.setYear(resultSet.getString("year"));
                 products.add(currentFilm);
             }
@@ -57,38 +57,38 @@ public class DbHandler {
                         "`year`, `budget`, `worldwideBoxOffice`, `filmType`) " +
                         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
             statement.setObject(1, film.getFilmID());
-            statement.setObject(2, film.getFilmNameRu());
-            statement.setObject(3, film.getFilmNameEn());
-            statement.setObject(4, film.getFilmURL());
+            statement.setObject(2, film.getNameRU());
+            statement.setObject(3, film.getNameEN());
+            statement.setObject(4, film.getWebURL());
             statement.setObject(5, film.isHasAwards() ? 1 : 0);
-            statement.setObject(6, film.getKinopoiskRating());
-            statement.setObject(7, film.getWorldwideCriticsPercentRating());
-            statement.setObject(8, film.getImdbRating());
-            statement.setObject(9, film.getFilmPremiereBluRay());
-            statement.setObject(10, film.getFilmPremiereDVD());
-            statement.setObject(11, film.getFilmSlogan());
-            statement.setObject(12, film.getFilmCountries());
-            statement.setObject(13, film.getFilmDescription());
-            statement.setObject(14, film.getFilmLentgh());
-            statement.setObject(15, film.getFilmGenres());
-            statement.setObject(16, film.is3DAvailable() ? 1 : 0);
+            statement.setObject(6, film.getRatingData().getRating());
+            statement.setObject(7, film.getRatingData().getRatingFilmCritics());
+            statement.setObject(8, film.getRatingData().getRatingIMDb());
+            statement.setObject(9, film.getRentData().getPremiereBluRay());
+            statement.setObject(10, film.getRentData().getPremiereDVD());
+            statement.setObject(11, film.getSlogan());
+            statement.setObject(12, film.getCountry());
+            statement.setObject(13, film.getDescription());
+            statement.setObject(14, film.getFilmLength());
+            statement.setObject(15, film.getGenre());
+            statement.setObject(16, film.isIs3D() ? 1 : 0);
             statement.setObject(17, film.getYear());
-            statement.setObject(18, film.getBudget());
-            statement.setObject(19, film.getBoxOffice());
-            statement.setObject(20, film.getFilmType());
+            statement.setObject(18, film.getBudgetData().getBudget());
+            statement.setObject(19, film.getBudgetData().getGrossWorld());
+            statement.setObject(20, film.getType());
             statement.execute();
         } catch (SQLException e) {
             LoggerClass.getInstanceSummaryLogger().error(e.getMessage());
         }
 
-        for (Creators current : film.getFilmCreators()) {
+        for (Creator current : film.getCreators()) {
             try (PreparedStatement statement = this.connection.prepareStatement(
                     "INSERT INTO creatorInfo(`creatorID`, `nameRU`, `nameEN`, `posterURL`) " +
                             "VALUES(?, ?, ?, ?)")) {
                 statement.setObject(1, current.getId());
-                statement.setObject(2, current.getNameRu());
-                statement.setObject(3, current.getNameEn());
-                statement.setObject(4, current.getPosterUrl());
+                statement.setObject(2, current.getNameRU());
+                statement.setObject(3, current.getNameEN());
+                statement.setObject(4, current.getPosterURL());
                 statement.execute();
             } catch (SQLException e) {
                 LoggerClass.getInstanceSummaryLogger().error(e.getMessage());
