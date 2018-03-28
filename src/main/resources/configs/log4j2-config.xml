@@ -3,12 +3,12 @@
     <Appenders>
         <Console name="Console">
             <PatternLayout>
-                <Pattern>%d %p %c{2} [%t] %l %m%n</Pattern>
+                <Pattern>%d | %p | %t | %l | %m%n</Pattern>
             </PatternLayout>
         </Console>
         <File name="Summary" fileName="target/logs/OverallResult.log" append="false">
             <PatternLayout>
-                <Pattern>%d %p %c{2} [%t] %l %m%n</Pattern>
+                <Pattern>%d | %p | %t | %l | %m%n</Pattern>
             </PatternLayout>
         </File>
         <File name="IDonly" fileName="target/logs/ID.log" append="false">

@@ -11,10 +11,14 @@ import java.util.List;
 
 public class DbHandler {
 
-    // Константа, в которой хранится адрес подключения
     private static final String DATABASE_URL = "jdbc:sqlite:2008 - 2017.db";
-    private Connection connection;
     private static DbHandler instance = null;
+    private Connection connection;
+
+    private DbHandler() throws SQLException {
+        DriverManager.registerDriver(new JDBC());
+        this.connection = DriverManager.getConnection(DATABASE_URL);
+    }
 
     public static synchronized DbHandler getInstance() throws SQLException {
         if (instance == null)
@@ -22,20 +26,13 @@ public class DbHandler {
         return instance;
     }
 
-    private DbHandler() throws SQLException {
-        DriverManager.registerDriver(new JDBC());
-        this.connection = DriverManager.getConnection(DATABASE_URL);
-    }
-
     public List<Film> getAllFilms() {
-        int lastSuccessfulID=0;
         try (Statement statement = this.connection.createStatement()) {
             List<Film> products = new ArrayList<Film>();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM filmInfo");
             while (resultSet.next()) {
                 Film currentFilm = new Film();
                 currentFilm.setFilmID(resultSet.getInt("filmID"));
-                lastSuccessfulID=resultSet.getInt("filmID");
                 currentFilm.setNameRU(resultSet.getString("nameRU"));
                 currentFilm.setYear(resultSet.getString("year"));
                 products.add(currentFilm);
