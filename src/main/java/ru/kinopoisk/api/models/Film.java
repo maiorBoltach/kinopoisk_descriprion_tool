@@ -2,10 +2,11 @@ package ru.kinopoisk.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
-@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Film {
     private Integer filmID;
     private String webURL;

@@ -53,7 +53,7 @@ public class Creator {
     }
 
     public void setPosterURL(String posterURL) {
-        this.posterURL = "https://st.kp.yandex.net/images/" + posterURL;
+        this.posterURL = "https://st.kp.yandex.net/images/" + posterURL.replace("iphone_", "iphone360_");
     }
 
     public String getProfessionText() {

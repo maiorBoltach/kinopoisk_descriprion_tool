@@ -23,11 +23,11 @@ public class HTTPConnector {
     public String execute() throws IOException {
         String responseBody = "";
         ResponseHandler<String> responseHandler = response -> {
-                statusCode = response.getStatusLine().getStatusCode();
-                HttpEntity entity = response.getEntity();
-                return entity != null ? EntityUtils.toString(entity) : null;
+            statusCode = response.getStatusLine().getStatusCode();
+            HttpEntity entity = response.getEntity();
+            return entity != null ? EntityUtils.toString(entity) : null;
 
-            };
+        };
         responseBody = httpclient.execute(request, responseHandler);
         httpclient.close();
         return responseBody;

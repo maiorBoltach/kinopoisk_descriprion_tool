@@ -15,16 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 public class IdStealer {
 
-    public static void main(String[] args) {
-        //fromToGetId("1968", "1977");
-        //fromToGetId("1978", "1987");
-        //fromToGetId("1988", "1997");
-        //fromToGetId("1998", "2007");
-        //fromToGetId("2008", "2017");
-        //fromToGetId("2008", "2017");
-    }
-
-    public static void fromToGetId(String yearFrom, String yearTo) {
+    public static File downloadIdInYearInterval(String yearFrom, String yearTo) {
+        LoggerClass.getInstanceSummaryLogger().trace("Executing download id tool ('" + yearFrom + "' - '" + yearTo + "'");
         int pageTotalWrite = 0;
         PrintWriter idWriter = null;
         PrintWriter errorsWriter = null;
@@ -35,7 +27,6 @@ public class IdStealer {
 
         try {
             idWriter = new PrintWriter("src/main/resources/films id/" + yearFrom + " - " + yearTo + ".txt");
-            errorsWriter = new PrintWriter("src/main/resources/films id/" + yearFrom + " - " + yearTo + " errors.txt");
 
             driver.get("https://www.kinopoisk.ru/s/type/film/list/1/m_act%5Bfrom_year%5D/" +
                     yearFrom + "/m_act%5Bto_year%5D/" + yearTo + "/");
@@ -46,7 +37,7 @@ public class IdStealer {
 
             WebElement nextPage = driver.findElement(By.xpath("//a[.= '»»']"));
             int lastPageNumber = getLastPageNumber(nextPage.getAttribute("href"));
-            System.out.println(lastPageNumber);
+            LoggerClass.getInstanceSummaryLogger().trace("All pages count: " + lastPageNumber);
 
             for (int i = 1; i <= lastPageNumber; i++) {
                 try {
@@ -61,29 +52,24 @@ public class IdStealer {
                             idWriter.println(element.getAttribute("data-id"));
                         }
                     } else {
-                        errorsWriter.println("ATTENTION!!!!!!!!!!!!!!!LIST SIZE 0, PAGE: " + i);
-                        errorsWriter.flush();
+                        LoggerClass.getInstanceSummaryLogger().warn("List size is 0, page: " + i);
                     }
                     idWriter.flush();
                     pageTotalWrite++;
-                    System.out.println("On page: " + pageTotalWrite);
+                    LoggerClass.getInstanceSummaryLogger().trace("Working on page: " + pageTotalWrite + "/" + lastPageNumber);
                 } catch (Exception e) {
-                    errorsWriter.println("Error on page: " + i + e.getMessage());
-                    errorsWriter.flush();
+                    LoggerClass.getInstanceSummaryLogger().warn("Error on page: " + i + e.getMessage());
                 }
 
             }
         } catch (FileNotFoundException e) {
-
+            LoggerClass.getInstanceSummaryLogger().fatal(e.getMessage());
         } finally {
             idWriter.flush();
             idWriter.close();
-            errorsWriter.flush();
-            errorsWriter.close();
         }
-
-        System.out.println("");
         driver.quit();
+        return new File("src/main/resources/films id/" + yearFrom + " - " + yearTo + ".txt");
     }
 
     private static Integer getLastPageNumber(String lastPage) {

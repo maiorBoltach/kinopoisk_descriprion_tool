@@ -20,36 +20,36 @@ public class RatingData {
         return rating;
     }
 
-    public void setRating(Double rating) {
-        this.rating = rating;
-    }
-
     public void setRating(String rating) {
         this.rating = Double.parseDouble(rating.replaceAll(" ", ""));
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
     public Double getRatingIMDb() {
         return ratingIMDb;
     }
 
-    public void setRatingIMDb(Double ratingIMDb) {
-        this.ratingIMDb = ratingIMDb;
-    }
-
     public void setRatingIMDb(String ratingIMDb) {
         this.ratingIMDb = Double.parseDouble(ratingIMDb);
+    }
+
+    public void setRatingIMDb(Double ratingIMDb) {
+        this.ratingIMDb = ratingIMDb;
     }
 
     public Integer getRatingFilmCritics() {
         return ratingFilmCritics;
     }
 
-    public void setRatingFilmCritics(Integer ratingFilmCritics) {
-        this.ratingFilmCritics = ratingFilmCritics;
-    }
-
     public void setRatingFilmCritics(String ratingFilmCritics) {
         this.ratingFilmCritics = Integer.parseInt(ratingFilmCritics.replaceAll("%", ""));
+    }
+
+    public void setRatingFilmCritics(Integer ratingFilmCritics) {
+        this.ratingFilmCritics = ratingFilmCritics;
     }
 
     @Override
