@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -212,5 +213,36 @@ public class Film {
                 ", rentData=" + rentData +
                 ", budgetData=" + budgetData +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Film film = (Film) o;
+        return isHasAwards() == film.isHasAwards() &&
+                isIs3D() == film.isIs3D() &&
+                Objects.equals(getFilmID(), film.getFilmID()) &&
+                Objects.equals(getWebURL(), film.getWebURL()) &&
+                Objects.equals(getNameEN(), film.getNameEN()) &&
+                Objects.equals(getNameRU(), film.getNameRU()) &&
+                Objects.equals(getFilmLength(), film.getFilmLength()) &&
+                Objects.equals(getDescription(), film.getDescription()) &&
+                Objects.equals(getSlogan(), film.getSlogan()) &&
+                Objects.equals(getYear(), film.getYear()) &&
+                Objects.equals(getType(), film.getType()) &&
+                Objects.equals(getGenre(), film.getGenre()) &&
+                Objects.equals(getCountry(), film.getCountry()) &&
+                Objects.equals(getCreators(), film.getCreators()) &&
+                Objects.equals(getRatingData(), film.getRatingData()) &&
+                Objects.equals(getRentData(), film.getRentData()) &&
+                Objects.equals(getBudgetData(), film.getBudgetData());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getFilmID(), getWebURL(), getNameEN(), getNameRU(), getFilmLength(), getDescription(), getSlogan(),
+                getYear(), getType(), getGenre(), getCountry(), isHasAwards(), isIs3D(), getCreators(), getRatingData(), getRentData(), getBudgetData());
     }
 }
