@@ -28,23 +28,6 @@ public class Film {
     private BudgetData budgetData;
 
     public Film() {
-        this.creators = null;
-        this.budgetData = null;
-        this.rentData = null;
-        this.ratingData = null;
-        this.filmID = null;
-        this.webURL = null;
-        this.nameEN = null;
-        this.nameRU = null;
-        this.filmLength = null;
-        this.description = null;
-        this.slogan = null;
-        this.year = null;
-        this.type = null;
-        this.genre = null;
-        this.country = null;
-        this.hasAwards = false;
-        this.is3D = false;
     }
 
     public List<Creator> getCreators() {

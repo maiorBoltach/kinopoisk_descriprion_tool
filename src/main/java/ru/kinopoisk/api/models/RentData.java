@@ -10,8 +10,6 @@ public class RentData {
     private String premiereBluRay;
 
     public RentData() {
-        this.premiereDVD = null;
-        this.premiereBluRay = null;
     }
 
     public String getPremiereDVD() {

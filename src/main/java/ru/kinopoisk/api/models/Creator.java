@@ -15,13 +15,6 @@ public class Creator {
     private String description;
 
     public Creator() {
-        this.id = null;
-        this.nameRU = null;
-        this.nameEN = null;
-        this.posterURL = null;
-        this.professionText = null;
-        this.professionKey = null;
-        this.description = null;
     }
 
     public Integer getId() {
