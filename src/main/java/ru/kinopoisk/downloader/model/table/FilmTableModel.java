@@ -30,28 +30,28 @@ public class FilmTableModel extends AbstractTableModel {
 		NAME_RU, NAME_EN, YEAR, IMDB, FILM_ID, LENGTH
 	}
 
-	private ListModelHolder<Film> personListModelHolder = new ListModelHolder<Film>();
+	private ListModelHolder<Film> filmListModelHolder = new ListModelHolder<Film>();
 	private ListModelChangeListener listModelChangeListener = new ListModelChangeListener();
 
 	private Map<Column, String> columnDisplayNames = new HashMap<Column, String>();
 
 	public FilmTableModel() {
-		columnDisplayNames.put(Column.NAME_RU, "NAMERU");
-		columnDisplayNames.put(Column.NAME_EN, "NAMEEN");
-		columnDisplayNames.put(Column.YEAR, "YEAR");
-		columnDisplayNames.put(Column.IMDB, "IMDB");
 		columnDisplayNames.put(Column.FILM_ID, "ID");
-		columnDisplayNames.put(Column.LENGTH, "LENGTH");
+		columnDisplayNames.put(Column.NAME_RU, "Name (RU)");
+		columnDisplayNames.put(Column.NAME_EN, "Name (EN)");
+		columnDisplayNames.put(Column.YEAR, "Year");
+		columnDisplayNames.put(Column.LENGTH, "Length");
+		columnDisplayNames.put(Column.IMDB, "IMDB");
 
-		personListModelHolder.addListDataListeners(listModelChangeListener);
+		filmListModelHolder.addListDataListeners(listModelChangeListener);
 	}
 
 	public final void setListModel(ListModel<Film> listModel) {
-		personListModelHolder.setModel(listModel);
+		filmListModelHolder.setModel(listModel);
 	}
 
 	public int getRowCount() {
-		ListModel<Film> listModel = personListModelHolder.getModel();
+		ListModel<Film> listModel = filmListModelHolder.getModel();
 		return listModel.getSize();
 	}
 
@@ -62,7 +62,7 @@ public class FilmTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Object columnValue = null;
 
-		ListModel<Film> listModel = personListModelHolder.getModel();
+		ListModel<Film> listModel = filmListModelHolder.getModel();
 		Film film = listModel.getElementAt(rowIndex);
 		Column column = getColumn(columnIndex);
 

@@ -24,7 +24,7 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
-        overviewPanel.setPersonList(filmListModel);
+        overviewPanel.setFilmList(filmListModel);
         setContent(overviewPanel);
 
         JMenuBar jMenuBar = new JMenuBar();
@@ -45,15 +45,15 @@ public class MainFrame extends JFrame {
         JMenu fileMenu = new JMenu("Films");
         jMenuBar.add(fileMenu);
 
-        LoadFilmsAction loadPersonsAction = new LoadFilmsAction(filmListModel);
-        loadPersonsAction.addSwingWorkerPropertyChangeListener(swingWorkerProgressModel);
+        LoadFilmsAction loadFilmssAction = new LoadFilmsAction(filmListModel);
+        loadFilmssAction.addSwingWorkerPropertyChangeListener(swingWorkerProgressModel);
 
-        JMenuItem loadMenuItem = new JMenuItem(loadPersonsAction);
+        JMenuItem loadMenuItem = new JMenuItem(loadFilmssAction);
         fileMenu.add(loadMenuItem);
 
-        ClearListModelAction clearPersonsModelAction = new ClearListModelAction(filmListModel);
-        JMenuItem clearPersonsMenuItem = new JMenuItem(clearPersonsModelAction);
-        fileMenu.add(clearPersonsMenuItem);
+        ClearListModelAction clearFilmsModelAction = new ClearListModelAction(filmListModel);
+        JMenuItem clearFilmsMenuItem = new JMenuItem(clearFilmsModelAction);
+        fileMenu.add(clearFilmsMenuItem);
     }
 
     public void setContent(Component component) {

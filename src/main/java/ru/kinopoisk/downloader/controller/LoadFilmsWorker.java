@@ -13,16 +13,16 @@ public class LoadFilmsWorker extends SwingWorker<List<Film>, Film> {
 
     private volatile int maxProgress;
     private int progressedItems;
-    private ListAdapterListModel<Film> personListModel;
+    private ListAdapterListModel<Film> filmListModel;
 
-    public LoadFilmsWorker(ListAdapterListModel<Film> personListModel) {
-        this.personListModel = personListModel;
+    public LoadFilmsWorker(ListAdapterListModel<Film> filmListModel) {
+        this.filmListModel = filmListModel;
     }
 
     @Override
     protected List<Film> doInBackground() throws Exception {
         LoggerClass.getInstanceSummaryLogger().info("Start executing");
-        personListModel.clear();
+        filmListModel.clear();
         maxProgress = 3;
         List<Film> films = new ArrayList<Film>();
         //TODO: load API
@@ -41,10 +41,10 @@ public class LoadFilmsWorker extends SwingWorker<List<Film>, Film> {
             publish(film2);
         }
         Film film3 = api.getFilmInfo(667);
-        if(film2 != null)
+        if(film3 != null)
         {
-            films.add(film2);
-            publish(film2);
+            films.add(film3);
+            publish(film3);
         }
         LoggerClass.getInstanceSummaryLogger().info("Finished executing");
         return films;
@@ -52,7 +52,7 @@ public class LoadFilmsWorker extends SwingWorker<List<Film>, Film> {
 
     @Override
     protected void process(List<Film> chunks) {
-        personListModel.addAll(chunks);
+        filmListModel.addAll(chunks);
         progressedItems = progressedItems + chunks.size();
         setProgress(calcProgress(progressedItems));
     }

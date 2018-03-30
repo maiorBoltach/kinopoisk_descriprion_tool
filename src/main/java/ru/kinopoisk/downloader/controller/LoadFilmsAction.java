@@ -12,17 +12,17 @@ public class LoadFilmsAction extends AbstractAction {
 
     private static final long serialVersionUID = 2636985714796751517L;
 
-    private ListAdapterListModel<Film> personListModel;
+    private ListAdapterListModel<Film> filmListModel;
     private Collection<SwingWorkerPropertyChangeListener> swingWorkerPropertyChangeListeners = new HashSet<SwingWorkerPropertyChangeListener>();
 
-    public LoadFilmsAction(ListAdapterListModel<Film> personListModel) {
-        this.personListModel = personListModel;
+    public LoadFilmsAction(ListAdapterListModel<Film> filmListModel) {
+        this.filmListModel = filmListModel;
         putValue(NAME, "Load");
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('L'));
     }
 
     public void actionPerformed(ActionEvent e) {
-        LoadFilmsWorker loadFilmsWorker = new LoadFilmsWorker(personListModel);
+        LoadFilmsWorker loadFilmsWorker = new LoadFilmsWorker(filmListModel);
         for (SwingWorkerPropertyChangeListener swingWorkerPropertyChangeListener : swingWorkerPropertyChangeListeners) {
             swingWorkerPropertyChangeListener.attachPropertyChangeListener(loadFilmsWorker);
         }

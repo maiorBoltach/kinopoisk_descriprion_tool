@@ -1,6 +1,4 @@
 package ru.kinopoisk.downloader;
-
-import ru.kinopoisk.downloader.logger.LoggerClass;
 import ru.kinopoisk.downloader.view.MainFrame;
 
 public class Main {
