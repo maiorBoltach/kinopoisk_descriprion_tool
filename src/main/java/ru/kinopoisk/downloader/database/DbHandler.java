@@ -1,8 +1,9 @@
-package ru.kinopoisk.api;
+package ru.kinopoisk.downloader.database;
 
 import org.sqlite.JDBC;
-import ru.kinopoisk.api.models.Creator;
-import ru.kinopoisk.api.models.Film;
+import ru.kinopoisk.downloader.data.Creator;
+import ru.kinopoisk.downloader.data.Film;
+import ru.kinopoisk.downloader.logger.LoggerClass;
 
 import java.sql.*;
 import java.util.ArrayList;

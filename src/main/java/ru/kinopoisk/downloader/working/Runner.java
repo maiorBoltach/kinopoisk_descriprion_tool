@@ -1,12 +1,8 @@
-package ru.kinopoisk.api;
+package ru.kinopoisk.downloader.working;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import ru.kinopoisk.api.models.Film;
+import ru.kinopoisk.downloader.logger.LoggerClass;
 
 import java.io.*;
-import java.sql.SQLException;
-import java.util.List;
 
 public class Runner {
     private static final String PATH = "src/main/resources/films id/1968 - 1977.ini";
@@ -47,18 +43,9 @@ public class Runner {
     }
 
     private static void execute(int id) {
-        APIRequester api = new APIRequester();
-        JsonNode filmInfoNode = api.getFilmInfo(id);
+        /*KinopoiskApi api = new KinopoiskApi();
         if (filmInfoNode != null) {
-            JsonParser newParser = new JsonParser();
-            Film currentFilm = null;
-            try {
-                currentFilm = newParser.getCurrentFilm(filmInfoNode);
-                LoggerClass.getInstanceSummaryLogger().info("Parsed film: " + currentFilm);
-            } catch (JsonProcessingException e) {
-                LoggerClass.getInstanceSummaryLogger().error("Parsing film '" + id + "': " + e.getMessage());
-                LoggerClass.getInstanceSummaryLoggerID().info(id);
-            }
+
             DbHandler dbHandler = null;
             try {
                 dbHandler = DbHandler.getInstance();
@@ -71,6 +58,6 @@ public class Runner {
                 LoggerClass.getInstanceSummaryLogger().error(e.getMessage());
                 LoggerClass.getInstanceSummaryLoggerID().info(id);
             }
-        }
+        }*/
     }
 }

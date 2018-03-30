@@ -1,4 +1,4 @@
-package ru.kinopoisk.api;
+package ru.kinopoisk.downloader.api;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ResponseHandler;
@@ -9,18 +9,18 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
-public class HTTPConnector {
+class HttpConnector {
     private final CloseableHttpClient httpclient;
     private final HttpUriRequest request;
     private int statusCode;
 
-    public HTTPConnector(HttpUriRequest request) {
+    HttpConnector(HttpUriRequest request) {
         statusCode = 100;
         httpclient = HttpClients.custom().build();
         this.request = request;
     }
 
-    public String execute() throws IOException {
+    String execute() throws IOException {
         String responseBody = "";
         ResponseHandler<String> responseHandler = response -> {
             statusCode = response.getStatusLine().getStatusCode();
@@ -33,7 +33,7 @@ public class HTTPConnector {
         return responseBody;
     }
 
-    public int getStatusCode() {
+    int getStatusCode() {
         return statusCode;
     }
 }

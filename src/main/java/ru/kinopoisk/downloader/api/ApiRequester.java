@@ -1,4 +1,4 @@
-package ru.kinopoisk.api;
+package ru.kinopoisk.downloader.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,7 +7,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
-import ru.kinopoisk.api.enums.KinopoiskOperations;
+import ru.kinopoisk.downloader.logger.LoggerClass;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -15,14 +15,23 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
-public class APIRequester {
-
-    private final RequestBuilder requestString;
+class ApiRequester {
+    private static volatile ApiRequester _instance = null;
+    private final RequestBuilder requestString = setBasicHeaders();
     private final String KINOPOISK_API_URL = "https://ext.kinopoisk.ru/ios/5.0.0/";
     private final String KINOPOISK_API_SALT = "IDATevHDS7";
 
-    public APIRequester() {
-        requestString = setBasicHeaders();
+    static ApiRequester getInstance() {
+        ApiRequester localInstance = _instance;
+        if (localInstance == null) {
+            synchronized (ApiRequester.class) {
+                localInstance = _instance;
+                if (localInstance == null) {
+                    _instance = localInstance = new ApiRequester();
+                }
+            }
+        }
+        return localInstance;
     }
 
     private RequestBuilder setBasicHeaders() {
@@ -42,7 +51,7 @@ public class APIRequester {
         return new String(Hex.encodeHex(DigestUtils.md5(full)));
     }
 
-    private JsonNode getRequest(String requestStr) {
+    JsonNode getRequest(String requestStr) {
         String result = "";
         Date currentTime = new Date();
         String currentTimeInFormat = new SimpleDateFormat("HH:mm MM.dd.yyyy", Locale.getDefault()).format(currentTime);
@@ -57,12 +66,14 @@ public class APIRequester {
         LoggerClass.getInstanceSummaryLogger().trace("Request API: " + uriAdress);
         LoggerClass.getInstanceSummaryLogger().trace("Request headers: " + Arrays.toString(httpRequester.getAllHeaders()));
 
-        HTTPConnector newConnector = new HTTPConnector(httpRequester);
+        HttpConnector newConnector = new HttpConnector(httpRequester);
 
         try {
             result = newConnector.execute();
+            LoggerClass.getInstanceSummaryLogger().info("Response body: '" + result + "'");
         } catch (IOException e) {
-            LoggerClass.getInstanceSummaryLogger().error("Can't get response from server '" + e.getMessage() + "', status " + newConnector.getStatusCode() + " ");
+            LoggerClass.getInstanceSummaryLogger().error("Can't get response from server '" + e.getMessage()
+                    + "', status " + newConnector.getStatusCode() + " ");
             LoggerClass.getInstanceSummaryLogger().error("Response body: '" + result + "'");
         }
 
@@ -74,21 +85,5 @@ public class APIRequester {
             }
         }
         return null;
-    }
-
-    public JsonNode getFilmInfo(int filmID) {
-        String parameterFilmID = "?filmID=";
-        String fullAPIString = KinopoiskOperations.FILM_DETAILS.toString() + parameterFilmID + String.valueOf(filmID);
-        JsonNode jsonObject = getRequest(fullAPIString);
-        checkJsonObject(jsonObject, filmID);
-        return jsonObject;
-    }
-
-
-    private void checkJsonObject(JsonNode jsonObject, int id) {
-        if (jsonObject == null) {
-            LoggerClass.getInstanceSummaryLogger().info("Null JSON (id = '" + id + "')");
-            LoggerClass.getInstanceSummaryLoggerID().info(id);
-        }
     }
 }

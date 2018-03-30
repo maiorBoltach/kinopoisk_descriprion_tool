@@ -1,4 +1,4 @@
-package ru.kinopoisk.api;
+package ru.kinopoisk.downloader.working;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
+import ru.kinopoisk.downloader.logger.LoggerClass;
 
 import java.io.File;
 import java.io.FileNotFoundException;

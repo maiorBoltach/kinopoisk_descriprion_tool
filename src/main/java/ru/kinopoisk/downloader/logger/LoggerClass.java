@@ -1,4 +1,4 @@
-package ru.kinopoisk.api;
+package ru.kinopoisk.downloader.logger;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 public class LoggerClass {
     private static final String PATH = "src/main/resources/configs/log4j2-config.xml";
     private static final String CONFIG_LOG4J = "log4j.configurationFile";
-    public static boolean stepSuccessful = true;
     private static Logger logger;
     private static Logger loggerID;
 

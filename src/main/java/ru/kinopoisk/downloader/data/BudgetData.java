@@ -1,4 +1,4 @@
-package ru.kinopoisk.api.models;
+package ru.kinopoisk.downloader.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

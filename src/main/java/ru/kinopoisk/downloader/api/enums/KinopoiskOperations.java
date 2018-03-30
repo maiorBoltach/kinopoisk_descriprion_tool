@@ -1,4 +1,4 @@
-package ru.kinopoisk.api.enums;
+package ru.kinopoisk.downloader.api.enums;
 
 public enum KinopoiskOperations {
     FILM_DETAILS("getKPFilmDetailView");
