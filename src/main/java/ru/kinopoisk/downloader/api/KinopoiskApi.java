@@ -10,7 +10,8 @@ import static ru.kinopoisk.downloader.api.JsonParser.getCurrentFilm;
 
 public class KinopoiskApi {
 
-    public KinopoiskApi() {}
+    public KinopoiskApi() {
+    }
 
     public Film getFilmInfo(int filmID) {
         String parameterFilmID = "?filmID=";

@@ -1,7 +1,5 @@
 package ru.kinopoisk.downloader.controller;
 
-import ru.kinopoisk.downloader.controller.LoadFilmsWorker;
-import ru.kinopoisk.downloader.controller.SwingWorkerPropertyChangeListener;
 import ru.kinopoisk.downloader.data.Film;
 import ru.kinopoisk.downloader.logger.LoggerClass;
 import ru.kinopoisk.downloader.model.list.ListAdapterListModel;
@@ -28,20 +26,18 @@ public class LoadFilmsAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         JFileChooser fileChooser = new JFileChooser();
         int status = fileChooser.showOpenDialog(null);
-            if (status == JFileChooser.APPROVE_OPTION) {
-                File file = fileChooser.getSelectedFile();
-                LoggerClass.getInstanceSummaryLogger().info("Opening: " + file.getName() + ".");
-                LoadFilmsWorker loadFilmsWorker = new LoadFilmsWorker(filmListModel, file);
-                for (SwingWorkerPropertyChangeListener swingWorkerPropertyChangeListener : swingWorkerPropertyChangeListeners) {
-                    swingWorkerPropertyChangeListener.attachPropertyChangeListener(loadFilmsWorker);
-                }
-                loadFilmsWorker.execute();
-            } else {
-                LoggerClass.getInstanceSummaryLogger().info("Open command cancelled by user.");
+        if (status == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            LoggerClass.getInstanceSummaryLogger().info("Opening: " + file.getName() + ".");
+            LoadFilmsWorker loadFilmsWorker = new LoadFilmsWorker(filmListModel, file);
+            for (SwingWorkerPropertyChangeListener swingWorkerPropertyChangeListener : swingWorkerPropertyChangeListeners) {
+                swingWorkerPropertyChangeListener.attachPropertyChangeListener(loadFilmsWorker);
             }
+            loadFilmsWorker.execute();
+        } else {
+            LoggerClass.getInstanceSummaryLogger().info("Open command cancelled by user.");
+        }
     }
-
-
 
 
     public void addSwingWorkerPropertyChangeListener(

@@ -51,8 +51,7 @@ public class LoadFilmsWorker extends SwingWorker<List<Film>, Film> {
                         throw new IOException("Wrong ID '" + id + "' (<= 0)");
                     }
                     Film film = api.getFilmInfo(id);
-                    if(film != null)
-                    {
+                    if (film != null) {
                         films.add(film);
                         publish(film);
                     }

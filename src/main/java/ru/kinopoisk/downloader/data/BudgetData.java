@@ -16,24 +16,24 @@ public class BudgetData {
         return budget;
     }
 
-    public void setBudget(Long budget) {
-        this.budget = budget;
-    }
-
     public void setBudget(String budget) {
         this.budget = Long.parseLong(budget.replaceAll("\\D", ""));
+    }
+
+    public void setBudget(Long budget) {
+        this.budget = budget;
     }
 
     public Long getGrossWorld() {
         return grossWorld;
     }
 
-    public void setGrossWorld(Long grossWorld) {
-        this.grossWorld = grossWorld;
-    }
-
     public void setGrossWorld(String grossWorld) {
         this.grossWorld = Long.parseLong(grossWorld.replaceAll("\\D", ""));
+    }
+
+    public void setGrossWorld(Long grossWorld) {
+        this.grossWorld = grossWorld;
     }
 
     @Override

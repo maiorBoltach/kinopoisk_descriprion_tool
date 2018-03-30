@@ -6,7 +6,6 @@ import ru.kinopoisk.downloader.logger.LoggerClass;
 import ru.kinopoisk.downloader.model.list.ListAdapterListModel;
 
 import javax.swing.*;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,21 +27,18 @@ public class LoadFilmsExampleWorker extends SwingWorker<List<Film>, Film> {
         List<Film> films = new ArrayList<Film>();
         KinopoiskApi api = new KinopoiskApi();
         Film film1 = api.getFilmInfo(444);
-        if(film1 != null)
-        {
+        if (film1 != null) {
             films.add(film1);
             publish(film1);
         }
 
         Film film2 = api.getFilmInfo(666);
-        if(film2 != null)
-        {
+        if (film2 != null) {
             films.add(film2);
             publish(film2);
         }
         Film film3 = api.getFilmInfo(667);
-        if(film3 != null)
-        {
+        if (film3 != null) {
             films.add(film3);
             publish(film3);
         }

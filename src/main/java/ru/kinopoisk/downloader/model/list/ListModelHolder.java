@@ -12,81 +12,78 @@ import java.util.List;
 
 public class ListModelHolder<E> {
 
-	private static final String PROPERTY_LIST_MODEL = "listModel";
+    private static final String PROPERTY_LIST_MODEL = "listModel";
+    private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+    private ListModelListenerAdapter listModelListenerAdapter = new ListModelListenerAdapter();
+    private ListModel<E> listModel = new DefaultListModel<E>();
+    private List<ListDataListener> listDataListeners = new ArrayList<ListDataListener>();
+    public ListModelHolder() {
+        propertyChangeSupport.addPropertyChangeListener(listModelListenerAdapter);
+    }
 
-	private static class ListModelListenerAdapter implements PropertyChangeListener {
+    public List<ListDataListener> getListDataListeners() {
+        return Collections.unmodifiableList(listDataListeners);
+    }
 
-		@Override
-		public void propertyChange(PropertyChangeEvent evt) {
-			ListModelHolder<?> listModelHolder = (ListModelHolder<?>) evt.getSource();
-			ListModel<?> listModel = listModelHolder.getModel();
-			int size = listModel.getSize();
+    public ListModel<E> getModel() {
+        return listModel;
+    }
 
-			ListDataEvent contentsChanged = new ListDataEvent(listModel, ListDataEvent.CONTENTS_CHANGED, 0, size);
+    public final void setModel(ListModel<E> listModel) {
+        if (this.listModel != null) {
+            removeListDataListeners(listModel, listDataListeners);
+        }
 
-			List<ListDataListener> listDataListeners = listModelHolder.getListDataListeners();
-			for (ListDataListener listDataListener : listDataListeners) {
-				listDataListener.contentsChanged(contentsChanged);
-			}
+        ListModel<E> oldModel = this.listModel;
+        this.listModel = listModel;
 
-		}
-	}
+        if (listModel != null) {
+            addListDataListeners(listModel, listDataListeners);
+        }
 
-	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-	private ListModelListenerAdapter listModelListenerAdapter = new ListModelListenerAdapter();
+        propertyChangeSupport.firePropertyChange(PROPERTY_LIST_MODEL, oldModel, this.listModel);
+    }
 
-	private ListModel<E> listModel = new DefaultListModel<E>();
-	private List<ListDataListener> listDataListeners = new ArrayList<ListDataListener>();
+    public void addListDataListeners(ListDataListener listDataListener) {
+        if (listDataListener != null) {
+            this.listDataListeners.add(listDataListener);
+            this.listModel.addListDataListener(listDataListener);
+        }
+    }
 
-	public ListModelHolder() {
-		propertyChangeSupport.addPropertyChangeListener(listModelListenerAdapter);
-	}
+    public void removeListDataListener(ListDataListener listDataListener) {
+        this.listDataListeners.remove(listDataListener);
+        this.listModel.removeListDataListener(listDataListener);
+    }
 
-	public List<ListDataListener> getListDataListeners() {
-		return Collections.unmodifiableList(listDataListeners);
-	}
+    private void removeListDataListeners(ListModel<E> listModel, List<ListDataListener> listDataListeners) {
+        for (ListDataListener listDataListener : listDataListeners) {
+            listModel.removeListDataListener(listDataListener);
+        }
+    }
 
-	public ListModel<E> getModel() {
-		return listModel;
-	}
+    private void addListDataListeners(ListModel<E> listModel, List<ListDataListener> listDataListeners) {
+        for (ListDataListener listDataListener : listDataListeners) {
+            listModel.addListDataListener(listDataListener);
+        }
+    }
 
-	public final void setModel(ListModel<E> listModel) {
-		if (this.listModel != null) {
-			removeListDataListeners(listModel, listDataListeners);
-		}
+    private static class ListModelListenerAdapter implements PropertyChangeListener {
 
-		ListModel<E> oldModel = this.listModel;
-		this.listModel = listModel;
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            ListModelHolder<?> listModelHolder = (ListModelHolder<?>) evt.getSource();
+            ListModel<?> listModel = listModelHolder.getModel();
+            int size = listModel.getSize();
 
-		if (listModel != null) {
-			addListDataListeners(listModel, listDataListeners);
-		}
+            ListDataEvent contentsChanged = new ListDataEvent(listModel, ListDataEvent.CONTENTS_CHANGED, 0, size);
 
-		propertyChangeSupport.firePropertyChange(PROPERTY_LIST_MODEL, oldModel, this.listModel);
-	}
+            List<ListDataListener> listDataListeners = listModelHolder.getListDataListeners();
+            for (ListDataListener listDataListener : listDataListeners) {
+                listDataListener.contentsChanged(contentsChanged);
+            }
 
-	public void addListDataListeners(ListDataListener listDataListener) {
-		if (listDataListener != null) {
-			this.listDataListeners.add(listDataListener);
-			this.listModel.addListDataListener(listDataListener);
-		}
-	}
-
-	public void removeListDataListener(ListDataListener listDataListener) {
-		this.listDataListeners.remove(listDataListener);
-		this.listModel.removeListDataListener(listDataListener);
-	}
-
-	private void removeListDataListeners(ListModel<E> listModel, List<ListDataListener> listDataListeners) {
-		for (ListDataListener listDataListener : listDataListeners) {
-			listModel.removeListDataListener(listDataListener);
-		}
-	}
-
-	private void addListDataListeners(ListModel<E> listModel, List<ListDataListener> listDataListeners) {
-		for (ListDataListener listDataListener : listDataListeners) {
-			listModel.addListDataListener(listDataListener);
-		}
-	}
+        }
+    }
 
 }

@@ -20,24 +20,24 @@ public class OverviewPanel extends JPanel {
     private JTable filmTable = new JTable(filmTableModel);
     private JList<Film> filmList = new JList<Film>(filmListModel);
 
-    public void setFilmList(ListAdapterListModel<Film> filmListModel) {
-        filmList.setModel(filmListModel);
-        filmTableModel.setListModel(filmListModel);
-    }
-
     public OverviewPanel() {
         setLayout(new BorderLayout());
         filmTable.setSelectionModel(filmList.getSelectionModel());
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBounds(10, 11, 580, 130);
-        add(scrollPane,BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER);
         scrollPane.setViewportView(filmTable);
-        filmTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+        filmTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting() && filmTable.getSelectedRow() != -1)
                     JOptionPane.showMessageDialog(null, getFilmFullInfo(filmList.getModel().getElementAt(filmTable.getSelectedRow())));
             }
         });
+    }
+
+    public void setFilmList(ListAdapterListModel<Film> filmListModel) {
+        filmList.setModel(filmListModel);
+        filmTableModel.setListModel(filmListModel);
     }
 
     private String getFilmFullInfo(Film film) {
@@ -54,24 +54,24 @@ public class OverviewPanel extends JPanel {
         result.append("Genre - ").append(film.getGenre()).append("\n");
         result.append("County - ").append(film.getCountry()).append("\n");
         result.append("Awards - ").append(film.isHasAwards()).append("\n");
-        if(film.getRatingData() != null) {
+        if (film.getRatingData() != null) {
             result.append("\nRATING").append("\n");
             result.append("IDBD - ").append(film.getRatingData().getRatingIMDb()).append("\n");
             result.append("Kinopoisk - ").append(film.getRatingData().getRating()).append("\n");
             result.append("Critics (positive) - ").append(film.getRatingData().getRatingFilmCritics()).append("%\n");
         }
-        if(film.getRentData() != null) {
+        if (film.getRentData() != null) {
             result.append("\nPREMIERE").append("\n");
             result.append("DVD - ").append(film.getRentData().getPremiereDVD()).append("\n");
             result.append("Blu-Ray - ").append(film.getRentData().getPremiereBluRay()).append("\n");
             result.append("3D - ").append(film.isIs3D()).append("\n");
         }
-        if(film.getBudgetData() != null) {
+        if (film.getBudgetData() != null) {
             result.append("\nBUDGET").append("\n");
             result.append("Budget - $").append(film.getBudgetData().getBudget()).append("\n");
             result.append("Gross (World) - $").append(film.getBudgetData().getGrossWorld()).append("\n");
         }
-        if(film.getCreators() != null) {
+        if (film.getCreators() != null) {
             result.append("\nCREATORS").append("\n");
             result.append(film.getCreators().stream().map(Creator::getNameRU).collect(Collectors.joining(", "))).append("\n");
         }

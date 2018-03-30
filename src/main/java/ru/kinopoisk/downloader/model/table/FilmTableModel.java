@@ -13,30 +13,9 @@ import java.util.Map;
 public class FilmTableModel extends AbstractTableModel {
 
     private static final long serialVersionUID = 1547542546403627396L;
-
-    private class ListModelChangeListener implements ListDataListener {
-        public void intervalAdded(ListDataEvent e) {
-            fireTableDataChanged();
-        }
-
-        public void intervalRemoved(ListDataEvent e) {
-            fireTableDataChanged();
-        }
-
-        public void contentsChanged(ListDataEvent e) {
-            fireTableDataChanged();
-        }
-    }
-
-    private enum Column {
-        FILM_ID, NAME_RU, NAME_EN, YEAR, LENGTH, IMDB
-    }
-
     private ListModelHolder<Film> filmListModelHolder = new ListModelHolder<Film>();
     private ListModelChangeListener listModelChangeListener = new ListModelChangeListener();
-
     private Map<Column, String> columnDisplayNames = new HashMap<Column, String>();
-
     public FilmTableModel() {
         columnDisplayNames.put(Column.FILM_ID, "ID");
         columnDisplayNames.put(Column.NAME_RU, "Name (RU)");
@@ -107,5 +86,23 @@ public class FilmTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         Column columnObj = getColumn(column);
         return columnDisplayNames.get(columnObj);
+    }
+
+    private enum Column {
+        FILM_ID, NAME_RU, NAME_EN, YEAR, LENGTH, IMDB
+    }
+
+    private class ListModelChangeListener implements ListDataListener {
+        public void intervalAdded(ListDataEvent e) {
+            fireTableDataChanged();
+        }
+
+        public void intervalRemoved(ListDataEvent e) {
+            fireTableDataChanged();
+        }
+
+        public void contentsChanged(ListDataEvent e) {
+            fireTableDataChanged();
+        }
     }
 }
