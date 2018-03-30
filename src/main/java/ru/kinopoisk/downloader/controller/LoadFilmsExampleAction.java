@@ -13,7 +13,7 @@ public class LoadFilmsExampleAction extends AbstractAction {
     private static final long serialVersionUID = 2636985714796751517L;
 
     private ListAdapterListModel<Film> filmListModel;
-    private Collection<SwingWorkerPropertyChangeListener> swingWorkerPropertyChangeListeners = new HashSet<SwingWorkerPropertyChangeListener>();
+    private Collection<SwingWorkerPropertyChangeListener> swingWorkerPropertyChangeListeners = new HashSet<>();
 
     public LoadFilmsExampleAction(ListAdapterListModel<Film> filmListModel) {
         this.filmListModel = filmListModel;

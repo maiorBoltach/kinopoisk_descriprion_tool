@@ -13,9 +13,9 @@ import java.util.Map;
 public class FilmTableModel extends AbstractTableModel {
 
     private static final long serialVersionUID = 1547542546403627396L;
-    private ListModelHolder<Film> filmListModelHolder = new ListModelHolder<Film>();
+    private ListModelHolder<Film> filmListModelHolder = new ListModelHolder<>();
     private ListModelChangeListener listModelChangeListener = new ListModelChangeListener();
-    private Map<Column, String> columnDisplayNames = new HashMap<Column, String>();
+    private Map<Column, String> columnDisplayNames = new HashMap<>();
     public FilmTableModel() {
         columnDisplayNames.put(Column.FILM_ID, "ID");
         columnDisplayNames.put(Column.NAME_RU, "Name (RU)");

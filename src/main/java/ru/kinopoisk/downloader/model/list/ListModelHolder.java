@@ -15,8 +15,8 @@ public class ListModelHolder<E> {
     private static final String PROPERTY_LIST_MODEL = "listModel";
     private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
     private ListModelListenerAdapter listModelListenerAdapter = new ListModelListenerAdapter();
-    private ListModel<E> listModel = new DefaultListModel<E>();
-    private List<ListDataListener> listDataListeners = new ArrayList<ListDataListener>();
+    private ListModel<E> listModel = new DefaultListModel<>();
+    private List<ListDataListener> listDataListeners = new ArrayList<>();
     public ListModelHolder() {
         propertyChangeSupport.addPropertyChangeListener(listModelListenerAdapter);
     }

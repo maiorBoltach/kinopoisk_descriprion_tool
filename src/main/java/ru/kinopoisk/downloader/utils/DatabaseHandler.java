@@ -29,7 +29,7 @@ public class DatabaseHandler {
 
     public List<Film> getAllFilms() {
         try (Statement statement = this.connection.createStatement()) {
-            List<Film> products = new ArrayList<Film>();
+            List<Film> products = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM filmInfo");
             while (resultSet.next()) {
                 Film currentFilm = new Film();

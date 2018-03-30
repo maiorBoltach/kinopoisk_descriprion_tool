@@ -35,10 +35,10 @@ public class LoadFilmsWorker extends SwingWorker<List<Film>, Film> {
     protected List<Film> doInBackground() throws Exception {
         LoggerClass.getInstanceSummaryLogger().info("Start executing");
         filmListModel.clear();
-        List<Film> films = new ArrayList<Film>();
+        List<Film> films = new ArrayList<>();
 
         KinopoiskApi api = new KinopoiskApi();
-        FileInputStream fileInputStream = null;
+        FileInputStream fileInputStream;
         try {
             fileInputStream = new FileInputStream(file);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));

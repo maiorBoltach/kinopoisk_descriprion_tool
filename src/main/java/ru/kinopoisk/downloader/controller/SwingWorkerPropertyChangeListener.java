@@ -3,8 +3,8 @@ package ru.kinopoisk.downloader.controller;
 import javax.swing.*;
 
 public interface SwingWorkerPropertyChangeListener {
-    public abstract void attachPropertyChangeListener(SwingWorker<?, ?> sw);
+    void attachPropertyChangeListener(SwingWorker<?, ?> sw);
 
-    public abstract void detachPropertyChangeListener(SwingWorker<?, ?> sw);
+    void detachPropertyChangeListener(SwingWorker<?, ?> sw);
 
 }

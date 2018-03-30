@@ -21,7 +21,7 @@ class HttpConnector {
     }
 
     String execute() throws IOException {
-        String responseBody = "";
+        String responseBody;
         ResponseHandler<String> responseHandler = response -> {
             statusCode = response.getStatusLine().getStatusCode();
             HttpEntity entity = response.getEntity();

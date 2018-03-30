@@ -20,11 +20,11 @@ public class LoadFilmsExampleWorker extends SwingWorker<List<Film>, Film> {
     }
 
     @Override
-    protected List<Film> doInBackground() throws Exception {
+    protected List<Film> doInBackground() {
         LoggerClass.getInstanceSummaryLogger().info("Start executing");
         filmListModel.clear();
         maxProgress = 3;
-        List<Film> films = new ArrayList<Film>();
+        List<Film> films = new ArrayList<>();
         KinopoiskApi api = new KinopoiskApi();
         Film film1 = api.getFilmInfo(444);
         if (film1 != null) {
@@ -54,7 +54,6 @@ public class LoadFilmsExampleWorker extends SwingWorker<List<Film>, Film> {
     }
 
     private int calcProgress(int progressedItems) {
-        int progress = (int) ((100.0 / (double) maxProgress) * (double) progressedItems);
-        return progress;
+        return (int) ((100.0 / (double) maxProgress) * (double) progressedItems);
     }
 }

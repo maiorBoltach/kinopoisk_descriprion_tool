@@ -15,10 +15,10 @@ public class OverviewPanel extends JPanel {
 
     private static final long serialVersionUID = -4471606875093169644L;
     private FilmTableModel filmTableModel = new FilmTableModel();
-    private ListAdapterListModel<Film> filmListModel = new ListAdapterListModel<Film>();
+    private ListAdapterListModel<Film> filmListModel = new ListAdapterListModel<>();
 
     private JTable filmTable = new JTable(filmTableModel);
-    private JList<Film> filmList = new JList<Film>(filmListModel);
+    private JList<Film> filmList = new JList<>(filmListModel);
 
     public OverviewPanel() {
         setLayout(new BorderLayout());
@@ -27,11 +27,9 @@ public class OverviewPanel extends JPanel {
         scrollPane.setBounds(10, 11, 580, 130);
         add(scrollPane, BorderLayout.CENTER);
         scrollPane.setViewportView(filmTable);
-        filmTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                if (!event.getValueIsAdjusting() && filmTable.getSelectedRow() != -1)
-                    JOptionPane.showMessageDialog(null, getFilmFullInfo(filmList.getModel().getElementAt(filmTable.getSelectedRow())));
-            }
+        filmTable.getSelectionModel().addListSelectionListener(event -> {
+            if (!event.getValueIsAdjusting() && filmTable.getSelectedRow() != -1)
+                JOptionPane.showMessageDialog(null, getFilmFullInfo(filmList.getModel().getElementAt(filmTable.getSelectedRow())));
         });
     }
 

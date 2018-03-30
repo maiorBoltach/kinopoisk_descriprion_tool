@@ -9,7 +9,7 @@ public class ListAdapterListModel<E> extends AbstractListModel<E> {
 
     private static final long serialVersionUID = -3348705533107354297L;
 
-    private List<E> list = new ArrayList<E>();
+    private List<E> list = new ArrayList<>();
 
     public void clear() {
         this.list.clear();
@@ -47,8 +47,7 @@ public class ListAdapterListModel<E> extends AbstractListModel<E> {
     }
 
     public E getElementAt(int index) {
-        E elementAt = list.get(index);
-        return elementAt;
+        return list.get(index);
     }
 
     public int indexOf(E element) {

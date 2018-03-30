@@ -14,7 +14,7 @@ public class MainFrame extends JFrame {
 
     private static final long serialVersionUID = 4353611743416911021L;
 
-    private ListAdapterListModel<Film> filmListModel = new ListAdapterListModel<Film>();
+    private ListAdapterListModel<Film> filmListModel = new ListAdapterListModel<>();
 
     private SwingWorkerProgressModel swingWorkerProgressModel = new SwingWorkerProgressModel();
 
