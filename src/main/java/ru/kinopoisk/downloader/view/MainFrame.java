@@ -2,6 +2,7 @@ package ru.kinopoisk.downloader.view;
 
 import ru.kinopoisk.downloader.controller.ClearListModelAction;
 import ru.kinopoisk.downloader.controller.LoadFilmsAction;
+import ru.kinopoisk.downloader.controller.LoadFilmsExampleAction;
 import ru.kinopoisk.downloader.controller.SwingWorkerProgressModel;
 import ru.kinopoisk.downloader.data.Film;
 import ru.kinopoisk.downloader.model.list.ListAdapterListModel;
@@ -45,11 +46,17 @@ public class MainFrame extends JFrame {
         JMenu fileMenu = new JMenu("Films");
         jMenuBar.add(fileMenu);
 
-        LoadFilmsAction loadFilmssAction = new LoadFilmsAction(filmListModel);
-        loadFilmssAction.addSwingWorkerPropertyChangeListener(swingWorkerProgressModel);
-
-        JMenuItem loadMenuItem = new JMenuItem(loadFilmssAction);
+        LoadFilmsAction loadFilmsAction = new LoadFilmsAction(filmListModel);
+        loadFilmsAction.addSwingWorkerPropertyChangeListener(swingWorkerProgressModel);
+        JMenuItem loadMenuItem = new JMenuItem(loadFilmsAction);
         fileMenu.add(loadMenuItem);
+
+
+        LoadFilmsExampleAction loadFilmsExampleAction = new LoadFilmsExampleAction(filmListModel);
+        loadFilmsExampleAction.addSwingWorkerPropertyChangeListener(swingWorkerProgressModel);
+
+        JMenuItem loadMenuItemExample = new JMenuItem(loadFilmsExampleAction);
+        fileMenu.add(loadMenuItemExample);
 
         ClearListModelAction clearFilmsModelAction = new ClearListModelAction(filmListModel);
         JMenuItem clearFilmsMenuItem = new JMenuItem(clearFilmsModelAction);

@@ -12,101 +12,100 @@ import java.util.Map;
 
 public class FilmTableModel extends AbstractTableModel {
 
-	private static final long serialVersionUID = 1547542546403627396L;
+    private static final long serialVersionUID = 1547542546403627396L;
 
-	private class ListModelChangeListener implements ListDataListener {
-		public void intervalAdded(ListDataEvent e) {
-			fireTableDataChanged();
-		}
-		public void intervalRemoved(ListDataEvent e) {
-			fireTableDataChanged();
-		}
-		public void contentsChanged(ListDataEvent e) {
-			fireTableDataChanged();
-		}
-	}
+    private class ListModelChangeListener implements ListDataListener {
+        public void intervalAdded(ListDataEvent e) {
+            fireTableDataChanged();
+        }
 
-	private enum Column {
-		NAME_RU, NAME_EN, YEAR, IMDB, FILM_ID, LENGTH
-	}
+        public void intervalRemoved(ListDataEvent e) {
+            fireTableDataChanged();
+        }
 
-	private ListModelHolder<Film> filmListModelHolder = new ListModelHolder<Film>();
-	private ListModelChangeListener listModelChangeListener = new ListModelChangeListener();
+        public void contentsChanged(ListDataEvent e) {
+            fireTableDataChanged();
+        }
+    }
 
-	private Map<Column, String> columnDisplayNames = new HashMap<Column, String>();
+    private enum Column {
+        FILM_ID, NAME_RU, NAME_EN, YEAR, LENGTH, IMDB
+    }
 
-	public FilmTableModel() {
-		columnDisplayNames.put(Column.FILM_ID, "ID");
-		columnDisplayNames.put(Column.NAME_RU, "Name (RU)");
-		columnDisplayNames.put(Column.NAME_EN, "Name (EN)");
-		columnDisplayNames.put(Column.YEAR, "Year");
-		columnDisplayNames.put(Column.LENGTH, "Length");
-		columnDisplayNames.put(Column.IMDB, "IMDB");
+    private ListModelHolder<Film> filmListModelHolder = new ListModelHolder<Film>();
+    private ListModelChangeListener listModelChangeListener = new ListModelChangeListener();
 
-		filmListModelHolder.addListDataListeners(listModelChangeListener);
-	}
+    private Map<Column, String> columnDisplayNames = new HashMap<Column, String>();
 
-	public final void setListModel(ListModel<Film> listModel) {
-		filmListModelHolder.setModel(listModel);
-	}
+    public FilmTableModel() {
+        columnDisplayNames.put(Column.FILM_ID, "ID");
+        columnDisplayNames.put(Column.NAME_RU, "Name (RU)");
+        columnDisplayNames.put(Column.NAME_EN, "Name (EN)");
+        columnDisplayNames.put(Column.YEAR, "Year");
+        columnDisplayNames.put(Column.LENGTH, "Length");
+        columnDisplayNames.put(Column.IMDB, "IMDB");
+        filmListModelHolder.addListDataListeners(listModelChangeListener);
+    }
 
-	public int getRowCount() {
-		ListModel<Film> listModel = filmListModelHolder.getModel();
-		return listModel.getSize();
-	}
+    public final void setListModel(ListModel<Film> listModel) {
+        filmListModelHolder.setModel(listModel);
+    }
 
-	public int getColumnCount() {
-		return Column.values().length;
-	}
+    public int getRowCount() {
+        ListModel<Film> listModel = filmListModelHolder.getModel();
+        return listModel.getSize();
+    }
 
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		Object columnValue = null;
+    public int getColumnCount() {
+        return Column.values().length;
+    }
 
-		ListModel<Film> listModel = filmListModelHolder.getModel();
-		Film film = listModel.getElementAt(rowIndex);
-		Column column = getColumn(columnIndex);
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        Object columnValue = null;
 
-		switch (column) {
-		case NAME_RU:
-			columnValue = film.getNameRU();
-			break;
-		case NAME_EN:
-			columnValue = film.getNameEN();
-			break;
-		case YEAR:
-			columnValue = film.getYear();
-			break;
-		case IMDB:
-			columnValue = film.getRatingData().getRatingIMDb();
-			break;
-		case FILM_ID:
-			columnValue = film.getFilmID();
-			break;
-		case LENGTH:
-			columnValue = film.getFilmLength();
-			break;
-		default:
-			break;
-		}
+        ListModel<Film> listModel = filmListModelHolder.getModel();
+        Film film = listModel.getElementAt(rowIndex);
+        Column column = getColumn(columnIndex);
 
-		return columnValue;
-	}
+        switch (column) {
+            case FILM_ID:
+                columnValue = film.getFilmID();
+                break;
+            case NAME_RU:
+                columnValue = film.getNameRU();
+                break;
+            case NAME_EN:
+                columnValue = film.getNameEN();
+                break;
+            case YEAR:
+                columnValue = film.getYear();
+                break;
+            case LENGTH:
+                columnValue = film.getFilmLength();
+                break;
+            case IMDB:
+                columnValue = film.getRatingData().getRatingIMDb();
+                break;
+            default:
+                break;
+        }
 
-	private Column getColumn(int columnIndex) {
-		Column[] columns = Column.values();
-		Column column = columns[columnIndex];
-		return column;
-	}
+        return columnValue;
+    }
 
-	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		return String.class;
-	}
+    private Column getColumn(int columnIndex) {
+        Column[] columns = Column.values();
+        return columns[columnIndex];
+    }
 
-	@Override
-	public String getColumnName(int column) {
-		Column columnObj = getColumn(column);
-		String displayName = columnDisplayNames.get(columnObj);
-		return displayName;
-	}
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return String.class;
+    }
+
+    @Override
+    public String getColumnName(int column) {
+        Column columnObj = getColumn(column);
+        return columnDisplayNames.get(columnObj);
+    }
 }

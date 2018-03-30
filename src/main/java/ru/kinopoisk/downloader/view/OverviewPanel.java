@@ -54,20 +54,27 @@ public class OverviewPanel extends JPanel {
         result.append("Genre - ").append(film.getGenre()).append("\n");
         result.append("County - ").append(film.getCountry()).append("\n");
         result.append("Awards - ").append(film.isHasAwards()).append("\n");
-        result.append("\nRATING").append("\n");
-        result.append("IDBD - ").append(film.getRatingData().getRatingIMDb()).append("\n");
-        result.append("Kinopoisk - ").append(film.getRatingData().getRating()).append("\n");
-        result.append("Critics (positive) - ").append(film.getRatingData().getRatingFilmCritics()).append("%\n");
-        result.append("\nPREMIERE").append("\n");
-        result.append("DVD - ").append(film.getRentData().getPremiereDVD()).append("\n");
-        result.append("Blu-Ray - ").append(film.getRentData().getPremiereBluRay()).append("\n");
-        result.append("3D - ").append(film.isIs3D()).append("\n");
-        result.append("\nBUDGET").append("\n");
-        result.append("Budget - $").append(film.getBudgetData().getBudget()).append("\n");
-        result.append("Gross (World) - $").append(film.getBudgetData().getGrossWorld()).append("\n");
-        result.append("\nCREATORS").append("\n");
-        result.append(film.getCreators().stream().map(Creator::getNameRU).collect(Collectors.joining(", "))).append("\n");
-
+        if(film.getRatingData() != null) {
+            result.append("\nRATING").append("\n");
+            result.append("IDBD - ").append(film.getRatingData().getRatingIMDb()).append("\n");
+            result.append("Kinopoisk - ").append(film.getRatingData().getRating()).append("\n");
+            result.append("Critics (positive) - ").append(film.getRatingData().getRatingFilmCritics()).append("%\n");
+        }
+        if(film.getRentData() != null) {
+            result.append("\nPREMIERE").append("\n");
+            result.append("DVD - ").append(film.getRentData().getPremiereDVD()).append("\n");
+            result.append("Blu-Ray - ").append(film.getRentData().getPremiereBluRay()).append("\n");
+            result.append("3D - ").append(film.isIs3D()).append("\n");
+        }
+        if(film.getBudgetData() != null) {
+            result.append("\nBUDGET").append("\n");
+            result.append("Budget - $").append(film.getBudgetData().getBudget()).append("\n");
+            result.append("Gross (World) - $").append(film.getBudgetData().getGrossWorld()).append("\n");
+        }
+        if(film.getCreators() != null) {
+            result.append("\nCREATORS").append("\n");
+            result.append(film.getCreators().stream().map(Creator::getNameRU).collect(Collectors.joining(", "))).append("\n");
+        }
         return result.toString();
     }
 }

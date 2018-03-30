@@ -1,4 +1,4 @@
-package ru.kinopoisk.downloader.database;
+package ru.kinopoisk.downloader.utils;
 
 import org.sqlite.JDBC;
 import ru.kinopoisk.downloader.data.Creator;
@@ -10,20 +10,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DbHandler {
+public class DatabaseHandler {
 
     private static final String DATABASE_URL = "jdbc:sqlite:2008 - 2017.db";
-    private static DbHandler instance = null;
+    private static DatabaseHandler instance = null;
     private Connection connection;
 
-    private DbHandler() throws SQLException {
+    private DatabaseHandler() throws SQLException {
         DriverManager.registerDriver(new JDBC());
         this.connection = DriverManager.getConnection(DATABASE_URL);
     }
 
-    public static synchronized DbHandler getInstance() throws SQLException {
+    public static synchronized DatabaseHandler getInstance() throws SQLException {
         if (instance == null)
-            instance = new DbHandler();
+            instance = new DatabaseHandler();
         return instance;
     }
 

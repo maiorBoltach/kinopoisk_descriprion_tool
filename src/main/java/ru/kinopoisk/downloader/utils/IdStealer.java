@@ -1,4 +1,4 @@
-package ru.kinopoisk.downloader.working;
+package ru.kinopoisk.downloader.utils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -20,12 +20,10 @@ public class IdStealer {
         LoggerClass.getInstanceSummaryLogger().trace("Executing download id tool ('" + yearFrom + "' - '" + yearTo + "'");
         int pageTotalWrite = 0;
         PrintWriter idWriter = null;
-        PrintWriter errorsWriter = null;
         ChromeOptions options = new ChromeOptions();
-        options.addExtensions(new File("src/main/resources/adblock/AdBlock_v3.26.1.crx"));
+        options.addExtensions(new File("src/main/resources/extensions/AdBlock_v3.26.1.crx"));
         WebDriver driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-
         try {
             idWriter = new PrintWriter("src/main/resources/films id/" + yearFrom + " - " + yearTo + ".txt");
 

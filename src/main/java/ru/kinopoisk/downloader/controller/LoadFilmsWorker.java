@@ -6,6 +6,7 @@ import ru.kinopoisk.downloader.logger.LoggerClass;
 import ru.kinopoisk.downloader.model.list.ListAdapterListModel;
 
 import javax.swing.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,38 +15,55 @@ public class LoadFilmsWorker extends SwingWorker<List<Film>, Film> {
     private volatile int maxProgress;
     private int progressedItems;
     private ListAdapterListModel<Film> filmListModel;
+    private File file;
 
-    public LoadFilmsWorker(ListAdapterListModel<Film> filmListModel) {
+    public LoadFilmsWorker(ListAdapterListModel<Film> filmListModel, File file) {
         this.filmListModel = filmListModel;
+        this.file = file;
+        int lines = 0;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            while (reader.readLine() != null) lines++;
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        maxProgress = lines;
     }
 
     @Override
     protected List<Film> doInBackground() throws Exception {
         LoggerClass.getInstanceSummaryLogger().info("Start executing");
         filmListModel.clear();
-        maxProgress = 3;
         List<Film> films = new ArrayList<Film>();
-        //TODO: load API
+
         KinopoiskApi api = new KinopoiskApi();
-        Film film1 = api.getFilmInfo(444);
-        if(film1 != null)
-        {
-            films.add(film1);
-            publish(film1);
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                try {
+                    LoggerClass.getInstanceSummaryLogger().trace("Executing film id = " + line);
+                    int id = Integer.parseInt(line);
+                    if (id <= 0) {
+                        throw new IOException("Wrong ID '" + id + "' (<= 0)");
+                    }
+                    Film film = api.getFilmInfo(id);
+                    if(film != null)
+                    {
+                        films.add(film);
+                        publish(film);
+                    }
+                } catch (IOException | NumberFormatException e) {
+                    LoggerClass.getInstanceSummaryLogger().error(e.getMessage());
+                }
+            }
+        } catch (FileNotFoundException e) {
+            LoggerClass.getInstanceSummaryLogger().error(e.getMessage());
         }
 
-        Film film2 = api.getFilmInfo(666);
-        if(film2 != null)
-        {
-            films.add(film2);
-            publish(film2);
-        }
-        Film film3 = api.getFilmInfo(667);
-        if(film3 != null)
-        {
-            films.add(film3);
-            publish(film3);
-        }
         LoggerClass.getInstanceSummaryLogger().info("Finished executing");
         return films;
     }
@@ -58,7 +76,6 @@ public class LoadFilmsWorker extends SwingWorker<List<Film>, Film> {
     }
 
     private int calcProgress(int progressedItems) {
-        int progress = (int) ((100.0 / (double) maxProgress) * (double) progressedItems);
-        return progress;
+        return (int) (100.0 / (double) maxProgress * (double) progressedItems);
     }
 }
