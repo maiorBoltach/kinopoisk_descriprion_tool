@@ -19,7 +19,7 @@
         <jackson-databind.version>2.9.10.7</jackson-databind.version>
         <selenium-java.version>3.9.1</selenium-java.version>
         <commons-io.version>2.6</commons-io.version>
-        <httpclient.version>4.5.5</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <sqlite-jdbc.version>3.6.20</sqlite-jdbc.version>
         <log4j-api.version>2.10.0</log4j-api.version>
         <log4j-core.version>2.13.2</log4j-core.version>
