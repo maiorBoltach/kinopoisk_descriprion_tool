@@ -22,7 +22,7 @@
         <httpclient.version>4.5.5</httpclient.version>
         <sqlite-jdbc.version>3.6.20</sqlite-jdbc.version>
         <log4j-api.version>2.10.0</log4j-api.version>
-        <log4j-core.version>2.13.2</log4j-core.version>
+        <log4j-core.version>2.16.0</log4j-core.version>
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
         <cucumber-testng.version>1.2.5</cucumber-testng.version>
